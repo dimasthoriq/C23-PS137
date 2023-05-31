@@ -107,7 +107,9 @@ fun RegisterScreen(
                     Spacer(modifier = Modifier.height(20.dp))
                     PrimaryButton(
                         text = "REGISTER",
-                        onClick = {},
+                        onClick = {
+                                  navController.navigate("bio")
+                        },
                         modifier = Modifier.fillMaxWidth()
                     )
 

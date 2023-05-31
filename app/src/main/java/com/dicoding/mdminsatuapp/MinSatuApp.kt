@@ -3,18 +3,17 @@ package com.dicoding.mdminsatuapp
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.dicoding.mdminsatuapp.ui.screen.OnboardingScreen
 import com.dicoding.mdminsatuapp.ui.screen.SplashScreen
 import com.dicoding.mdminsatuapp.ui.screen.login.LoginScreen
+import com.dicoding.mdminsatuapp.ui.screen.quicksurvey.QuickSurveyBioScreen
+import com.dicoding.mdminsatuapp.ui.screen.quicksurvey.QuickSurveyInterestScreen
 import com.dicoding.mdminsatuapp.ui.screen.register.RegisterScreen
 
 @Composable
@@ -41,6 +40,12 @@ fun MinSatuApp() {
         }
         composable("register") {
             RegisterScreen( navController = navController)
+        }
+        composable("bio") {
+            QuickSurveyBioScreen(navController = navController)
+        }
+        composable("interest") {
+            QuickSurveyInterestScreen(navController = navController)
         }
 
     }

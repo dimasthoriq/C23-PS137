@@ -25,8 +25,8 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 import com.dicoding.mdminsatuapp.R
+import com.dicoding.mdminsatuapp.ui.components.CustomOutlinedButton
 
-@Preview(showBackground = true)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -103,7 +103,8 @@ fun OnboardingScreen(navController: NavController) {
                     .fillMaxWidth()
                     .padding(8.dp)
                 ) {
-                    OutlinedButton(
+                    CustomOutlinedButton(
+                        text = "Next",
                         onClick = {
                             scope.launch {
                                 val nextpage = selectedPage + 1
@@ -111,26 +112,25 @@ fun OnboardingScreen(navController: NavController) {
                             }
                         },
                         modifier = Modifier
-                            .clip(RoundedCornerShape(16.dp)
+                            .clip(RoundedCornerShape(16.dp),
 
-                    ) ) {
-                        Text(text = "Next", color = colorResource(id = R.color.yellowDark))
-                    }
+
+
+                    ) )
                 }
             } else {
-                OutlinedButton(
+                CustomOutlinedButton(
                     onClick = {
                         navController.navigate("login")
                     },
+                    text = "Get Started",
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)
                         .height(36.dp)
                         .clip(RoundedCornerShape(16.dp))
 
-                ) {
-                    Text(text = "Get Started", color = colorResource(id = R.color.yellowDark))
-                }
+                )
             }
         }
     }

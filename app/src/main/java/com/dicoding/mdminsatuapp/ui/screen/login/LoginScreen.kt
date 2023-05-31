@@ -101,7 +101,9 @@ fun LoginScreen(
                     Spacer(modifier = Modifier.height(20.dp))
                     PrimaryButton(
                         text = "LOGIN",
-                        onClick = {},
+                        onClick = {
+                            navController.navigate("bio")
+                        },
                         modifier = Modifier.fillMaxWidth()
                     )
                     DividerTextComponent()

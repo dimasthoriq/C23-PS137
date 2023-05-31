@@ -23,7 +23,7 @@ import com.dicoding.mdminsatuapp.R
 import com.dicoding.mdminsatuapp.ui.theme.Shapes
 
 @Composable
-fun OutlinedButton(
+fun CustomOutlinedButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -51,7 +51,7 @@ fun OutlinedButton(
 @Composable
 @Preview
 fun OutlinedButtonPreview() {
-    OutlinedButton(text = "Next", onClick = {})
+    CustomOutlinedButton(text = "Next", onClick = {})
 }
 
 @Composable
