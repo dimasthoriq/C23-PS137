@@ -1,0 +1,101 @@
+user_id,user_name,age,gender,email,passwords,latitude,longitude,interest_sports,interest_arts,interest_travel,interest_edu,travel_dist
+1,Eli Latupono,39,0,39tupono@gmail.com,Eli1-74083,-6.745342677,110.2674083,0.5,0.8,0.6,0.2,>50 Km
+2,Banawi Wasita,37,0,37Wasita@gmail.com,Ban2-98077,-6.37777596,106.9198077,0.5,0.8,0.4,0.4,>50 Km
+3,Harimurti Nuraini,30,0,30uraini@gmail.com,Har3-39495,-7.839328236,111.39495,0.3,0.2,0,0,>50 Km
+4,Nilam Hartati,46,0,46artati@gmail.com,Nil4-74945,-7.777849001,107.0374945,0.5,0.4,1,1,>50 Km
+5,Galiono Natsir,15,1,15Natsir@gmail.com,Gal5-57993,-6.533740211,106.8657993,0.1,0.4,1,1,<10 Km
+6,Galih Rahmawati,44,1,44mawati@gmail.com,Gal6-95894,-7.296065826,109.7495894,0.5,0.2,0.8,0,>50 Km
+7,Lalita Pratiwi,39,0,39ratiwi@gmail.com,Lal7-07787,-6.5262174,110.1107787,0.1,0.4,0.2,0,>50 Km
+8,Bagiya Irawan,19,0,19Irawan@gmail.com,Bag8-06725,-6.305672984,110.3106725,0.5,1,0,1,<10 Km
+9,Chandra Haryanto,34,1,34ryanto@gmail.com,Cha9-83458,-6.62935355,108.5083458,0.1,0.4,0,0.2,>50 Km
+10,Leo Wahyuni,36,1,36ahyuni@gmail.com,Leo10-89602,-6.33279857,105.8789602,0.5,0.4,1,0,>50 Km
+11,Malika Purwanti,41,0,41rwanti@gmail.com,Mal11-34819,-6.592571018,109.734819,0.5,0,0,0.2,>50 Km
+12,Kawaya Usamah,24,0,24Usamah@gmail.com,Kaw12-19608,-7.184026095,109.6119608,0.1,0.2,0.8,0.8,10-50 Km
+13,Adhiarja Sihotang,50,1,50hotang@gmail.com,Adh13-80814,-7.0673214,107.1380814,0.1,0.6,1,0,>50 Km
+14,Puspa Farida,21,1,21Farida@gmail.com,Pus14-77329,-7.626673491,108.8577329,0.1,0.2,0.6,0.8,10-50 Km
+15,Violet Damanik,36,0,36amanik@gmail.com,Vio15-73973,-6.988809996,108.4773973,0.3,1,1,1,>50 Km
+16,Talia Iswahyudi,20,0,20ahyudi@gmail.com,Tal16-75834,-6.295099962,107.6675834,0.3,0.6,0.6,0.2,<10 Km
+17,Endra Hariyah,42,1,42ariyah@gmail.com,End17-22226,-6.510428696,109.1822226,0.5,0.8,1,0,>50 Km
+18,Cut Almira Purwanti,19,1,19rwanti@gmail.com,Cut18-34575,-6.46798184,108.0134575,0.3,0,0.2,0,<10 Km
+19,Tania Sitompul,54,0,54tompul@gmail.com,Tan19-49493,-7.39342569,107.9749493,0.5,0.8,0.8,0.8,>50 Km
+20,Tri Novitasari,25,1,25tasari@gmail.com,Tri20-93362,-6.942251141,109.6093362,0.5,0.2,0.6,1,10-50 Km
+21,Ajeng Anggriawan,31,0,31riawan@gmail.com,Aje21-20166,-7.61725157,111.7020166,0.3,0.4,0,0,>50 Km
+22,Wani Ardianto,39,0,39dianto@gmail.com,Wan22-15717,-6.381069497,109.1015717,0.3,0.2,0.4,1,>50 Km
+23,Vicky Nashiruddin,45,1,45ruddin@gmail.com,Vic23-02531,-7.311480309,109.9702531,0.1,0.8,0,1,>50 Km
+24,Ghaliyati Hidayat,43,0,43idayat@gmail.com,Gha24-94037,-7.506877452,111.8794037,0.5,0.6,0,0.6,>50 Km
+25,Rendy Putra,28,0,28 Putra@gmail.com,Ren25-42876,-7.839345052,106.7642876,0.3,1,1,0.8,>50 Km
+26,Sutan Estiono Manullang,24,0,24ullang@gmail.com,Sut26-03793,-7.350185433,111.7703793,0.1,0.6,1,0.4,10-50 Km
+27,Cager Sirait,37,0,37Sirait@gmail.com,Cag27-70211,-6.782474467,109.8970211,0.3,1,0.6,0,>50 Km
+28,Aisyah Padmasari,48,0,48masari@gmail.com,Ais28-57958,-6.513510143,111.1057958,0.5,0,0.2,0.6,>50 Km
+29,R.A. Zahra Hastuti,16,1,16astuti@gmail.com,R.A29-38028,-7.296546685,112.1838028,0.3,0.4,0.2,0.6,<10 Km
+30,Puti Intan Thamrin,51,0,51hamrin@gmail.com,Put30-05382,-6.629290195,111.4805382,0.5,0.6,0.8,0.2,>50 Km
+31,Indra Prasetya,54,1,54asetya@gmail.com,Ind31-14239,-6.995567431,111.2214239,0.3,0.4,0.6,0.8,>50 Km
+32,Rusman Purwanti,36,0,36rwanti@gmail.com,Rus32-67401,-7.203794579,112.3767401,0.3,1,0.8,1,>50 Km
+33,Farah Ardianto,18,1,18dianto@gmail.com,Far33-14045,-6.466592806,112.2914045,0.5,0.8,0.4,0.8,<10 Km
+34,Kayla Suwarno,26,0,26uwarno@gmail.com,Kay34-57613,-6.477848822,111.1657613,0.3,0.6,1,0.8,>50 Km
+35,Rachel Mansur,19,1,19Mansur@gmail.com,Rac35-61098,-7.493930297,110.7561098,0.5,0.8,0.6,0,<10 Km
+36,Ajeng Sirait,37,0,37Sirait@gmail.com,Aje36-30252,-6.554812241,109.3230252,0.1,0.6,0.2,0.8,>50 Km
+37,Kacung Tampubolon,25,0,25ubolon@gmail.com,Kac37-28108,-6.80667872,108.9928108,0.3,1,0.4,0.8,10-50 Km
+38,Kamila Hastuti,38,0,38astuti@gmail.com,Kam38-91987,-7.364040056,111.891987,0.3,0,0.4,1,>50 Km
+39,Hasan Firgantoro,43,1,43antoro@gmail.com,Has39-11222,-6.701857567,108.3711222,0.3,1,0.2,0.6,>50 Km
+40,Puti Vera Rajasa,15,0,15Rajasa@gmail.com,Put40-66913,-6.536515484,106.5066913,0.1,0.6,0,0.6,<10 Km
+41,Wakiman Novitasari,43,0,43tasari@gmail.com,Wak41-58187,-7.319769934,109.8358187,0.3,0,0.6,1,>50 Km
+42,Artanto Rahayu,39,0,39Rahayu@gmail.com,Art42-86852,-6.987044662,111.0586852,0.3,0,0.4,0.4,>50 Km
+43,Cut Natalia Iswahyudi,42,1,42ahyudi@gmail.com,Cut43-79193,-7.205321994,111.7579193,0.1,0.8,1,0.6,>50 Km
+44,Malik Tamba,42,0,42 Tamba@gmail.com,Mal44-04913,-7.326010871,108.7804913,0.5,0.8,0.4,0.2,>50 Km
+45,Gilda Prayoga,50,0,50rayoga@gmail.com,Gil45-71176,-6.358585961,108.0171176,0.5,0,0.6,1,>50 Km
+46,Yance Situmorang,29,0,29morang@gmail.com,Yan46-29369,-7.07581325,108.5429369,0.5,0,0.8,0.4,>50 Km
+47,Farah Hidayanto,48,1,48ayanto@gmail.com,Far47-80131,-7.524416766,107.3680131,0.1,0.2,0.4,0.6,>50 Km
+48,Janet Sihotang,52,0,52hotang@gmail.com,Jan48-38924,-7.365249569,109.1238924,0.5,0,0,1,>50 Km
+49,Erik Hutagalung,26,0,26galung@gmail.com,Eri49-90018,-6.531517154,111.4790018,0.1,0,0.2,0.8,>50 Km
+50,Jamil Irawan,15,1,15Irawan@gmail.com,Jam50-08286,-6.401379593,106.0908286,0.5,0.2,1,0,<10 Km
+51,R. Elisa Winarno,39,0,39inarno@gmail.com,R. 51-91012,-7.119576653,110.9591012,0.5,0.4,0.6,0.2,>50 Km
+52,Galih Hakim,49,1,49 Hakim@gmail.com,Gal52-66061,-7.491142556,107.1566061,0.1,1,1,0.2,>50 Km
+53,Jasmin Maulana,24,0,24aulana@gmail.com,Jas53-49288,-7.075407493,111.6649288,0.5,0,0.8,0.4,10-50 Km
+54,R. Ega Usada,31,0,31 Usada@gmail.com,R. 54-11908,-6.986768918,111.5211908,0.3,0.6,0,1,>50 Km
+55,Aisyah Kusmawati,26,0,26mawati@gmail.com,Ais55-77274,-7.926778674,107.5977274,0.1,0.8,0.4,0.2,>50 Km
+56,Olivia Kurniawan,32,0,32niawan@gmail.com,Oli56-69824,-7.905010131,111.4569824,0.1,0.2,0.2,1,>50 Km
+57,Sarah Santoso,39,1,39antoso@gmail.com,Sar57-19339,-6.607546035,112.2219339,0.3,0,0.6,0.4,>50 Km
+58,Julia Lailasari,40,0,40lasari@gmail.com,Jul58-58876,-7.400369024,109.5658876,0.3,0,0.6,0.6,>50 Km
+59,Cakrabuana Kuswoyo,23,0,23uswoyo@gmail.com,Cak59-26305,-7.421055782,112.0126305,0.3,0,1,0,10-50 Km
+60,Nabila Permata,33,0,33ermata@gmail.com,Nab60-55166,-6.603903517,112.2855166,0.5,1,0.8,1,>50 Km
+61,Arta Fujiati,37,0,37ujiati@gmail.com,Art61-80628,-6.651316296,107.4880628,0.3,0.2,0.4,0.4,>50 Km
+62,Lega Anggriawan,29,0,29riawan@gmail.com,Leg62-95944,-6.901662807,109.5895944,0.3,0.8,0.8,0.8,>50 Km
+63,Oliva Habibi,33,0,33Habibi@gmail.com,Oli63-15629,-7.046244944,111.8115629,0.5,0.2,0,0.6,>50 Km
+64,Ami Pradipta,24,0,24adipta@gmail.com,Ami64-20627,-7.401951242,106.0920627,0.5,0.2,1,0.8,10-50 Km
+65,Cut Zahra Rahayu,43,0,43Rahayu@gmail.com,Cut65-84609,-6.437067051,106.8684609,0.3,0.6,0,1,>50 Km
+66,Tgk. Joko Hakim,27,0,27 Hakim@gmail.com,Tgk66-31682,-7.006269914,112.0531682,0.1,0.2,0.2,0.8,>50 Km
+67,Raharja Prasasta,40,0,40asasta@gmail.com,Rah67-87925,-7.697822698,106.587925,0.5,0.8,0.2,1,>50 Km
+68,Darman Zulaika,32,0,32ulaika@gmail.com,Dar68-76062,-7.823342954,106.976062,0.5,0,0.8,0.8,>50 Km
+69,Okta Putra,19,0,19 Putra@gmail.com,Okt69-65948,-7.599891084,106.9465948,0.1,0.8,0.6,0.4,<10 Km
+70,Michelle Winarno,28,0,28inarno@gmail.com,Mic70-10214,-6.910274737,108.6010214,0.5,1,1,0,>50 Km
+71,Puti Yance Prabowo,34,0,34rabowo@gmail.com,Put71-54356,-7.15235217,106.7154356,0.1,0,0.6,0.4,>50 Km
+72,Caturangga Winarno,33,0,33inarno@gmail.com,Cat72-17268,-6.850623423,106.5317268,0.5,0.4,0.2,0,>50 Km
+73,Galar Wasita,21,0,21Wasita@gmail.com,Gal73-98947,-6.54632099,108.9398947,0.1,0.8,0.4,0,10-50 Km
+74,Laksana Rahmawati,36,1,36mawati@gmail.com,Lak74-15795,-7.481285167,112.015795,0.5,0.2,0.6,0.8,>50 Km
+75,Umi Laksita,29,0,29aksita@gmail.com,Umi75-73423,-7.744616927,109.6273423,0.1,1,0.4,0,>50 Km
+76,Gaduh Aryani,21,0,21Aryani@gmail.com,Gad76-67351,-7.754284883,109.6167351,0.1,0,0.8,0.6,10-50 Km
+77,Tira Zulkarnain,38,1,38arnain@gmail.com,Tir77-99463,-7.323681965,110.7299463,0.3,0.4,0.8,0.6,>50 Km
+78,R. Yani Maheswara,20,0,20eswara@gmail.com,R. 78-80074,-6.87855884,112.1980074,0.3,1,0,0.6,<10 Km
+79,Bagiya Wibowo,45,1,45Wibowo@gmail.com,Bag79-00164,-7.914216725,106.1600164,0.3,0.2,0.2,0,>50 Km
+80,Cakrawala Waskita,51,1,51askita@gmail.com,Cak80-02216,-7.178519499,107.0402216,0.3,0,1,0.6,>50 Km
+81,Virman Setiawan,49,1,49tiawan@gmail.com,Vir81-83907,-6.787493708,106.4283907,0.3,1,0.2,0.8,>50 Km
+82,Laila Yolanda,44,1,44olanda@gmail.com,Lai82-28886,-7.946310965,108.7828886,0.1,0.2,1,0,>50 Km
+83,Cemplunk Saragih,20,0,20aragih@gmail.com,Cem83-33964,-6.899520851,109.1433964,0.5,0.6,0.2,0.6,<10 Km
+84,Intan Astuti,36,0,36Astuti@gmail.com,Int84-04704,-7.036882145,106.6204704,0.3,0.8,0.6,0,>50 Km
+85,Puti Eka Prabowo,47,1,47rabowo@gmail.com,Put85-06009,-7.032111305,106.3406009,0.1,0,1,0.2,>50 Km
+86,Indah Thamrin,39,0,39hamrin@gmail.com,Ind86-39576,-6.676791229,109.7439576,0.1,0,0.2,0.2,>50 Km
+87,Hasim Waluyo,36,0,36Waluyo@gmail.com,Has87-46255,-6.648114029,106.2946255,0.5,1,0.2,0.2,>50 Km
+88,Drs. Kunthara Sihombing,17,1,17ombing@gmail.com,Drs88-64894,-6.472743156,111.4264894,0.1,0.2,0.6,0.4,<10 Km
+89,Jessica Yolanda,26,0,26olanda@gmail.com,Jes89-66512,-6.883808652,111.8366512,0.1,0,0.4,0.4,>50 Km
+90,Alambana Pradipta,42,0,42adipta@gmail.com,Ala90-48284,-6.93203635,108.4648284,0.5,1,0.2,0.2,>50 Km
+91,Betania Purwanti,33,0,33rwanti@gmail.com,Bet91-56164,-6.772095897,106.856164,0.3,0.2,0.4,0.6,>50 Km
+92,Vanesa Prakasa,32,1,32rakasa@gmail.com,Van92-79322,-6.827495332,109.4679322,0.3,0.6,0.2,0.8,>50 Km
+93,Tgk. Silvia Pudjiastuti,41,0,41astuti@gmail.com,Tgk93-44682,-7.909427856,106.444682,0.5,0.4,0.2,0.2,>50 Km
+94,Kacung Usada,26,0,26 Usada@gmail.com,Kac94-82354,-7.568936457,110.5382354,0.3,0.6,0.4,1,>50 Km
+95,Sutan Jaeman Yuniar,17,1,17Yuniar@gmail.com,Sut95-13862,-6.740603371,111.6413862,0.1,0.2,0.6,0.2,<10 Km
+96,Calista Marpaung,50,0,50rpaung@gmail.com,Cal96-21258,-6.485162905,107.3621258,0.5,0.8,0,0,>50 Km
+97,Cahya Hassanah,39,0,39ssanah@gmail.com,Cah97-93459,-6.617904773,109.9393459,0.5,1,0.6,1,>50 Km
+98,Cut Novi Siregar,54,0,54iregar@gmail.com,Cut98-81684,-7.016094381,110.7181684,0.3,0.8,0.8,0.6,>50 Km
+99,Nyana Pradana,33,1,33radana@gmail.com,Nya99-01633,-6.7259111,111.5601633,0.5,0,0.2,0.2,>50 Km
+100,Rachel Prasetya,54,0,54asetya@gmail.com,Rac100-96138,-6.6726811,105.9296138,0.3,0.6,0.2,0.6,>50 Km
