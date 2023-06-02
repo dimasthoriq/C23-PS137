@@ -1,7 +1,6 @@
 package com.dicoding.mdminsatuapp.ui.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -12,7 +11,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
@@ -22,9 +20,9 @@ fun TopBar(
     onNavigationIconClick: () -> Unit = {}
 ) {
     TopAppBar(backgroundColor = MaterialTheme.colors.surface) {
-        if (navigationIcon != null) { // New
+        if (navigationIcon != null) {
             IconButton(onClick = onNavigationIconClick) {
-                Icon(navigationIcon, contentDescription = "Back")
+                Icon(navigationIcon, contentDescription = null)
             }
         }
         Text(
@@ -44,7 +42,19 @@ fun TopBar(
 fun TopBarPreview() {
     TopBar(
         text = "Activity",
-        navigationIcon = Icons.Filled.ArrowBack,
+        onNavigationIconClick = {
+
+        }
+    )
+
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TopBarPreviewWithNavigationIcon() {
+    TopBar(
+        text = "Activity",
+        navigationIcon = Icons.Default.ArrowBack,
         onNavigationIconClick = {
 
         }
