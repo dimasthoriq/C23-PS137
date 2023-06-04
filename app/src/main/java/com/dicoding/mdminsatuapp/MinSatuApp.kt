@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.dicoding.mdminsatuapp.ui.screen.MainScreen
 import com.dicoding.mdminsatuapp.ui.screen.OnboardingScreen
 import com.dicoding.mdminsatuapp.ui.screen.SplashScreen
 import com.dicoding.mdminsatuapp.ui.screen.login.LoginScreen
@@ -46,6 +47,9 @@ fun MinSatuApp() {
         }
         composable("interest") {
             QuickSurveyInterestScreen(navController = navController)
+        }
+        composable("main_screen") {
+            MainScreen()
         }
 
     }

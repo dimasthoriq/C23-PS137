@@ -3,8 +3,7 @@ package com.dicoding.mdminsatuapp.ui.components
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -167,4 +166,65 @@ fun GoogleButtonPreview() {
         loadingText = "Creating Account...",
         onClicked = {}
     )
+}
+
+@Composable
+fun TabButton(
+    text: String,
+    isSelected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    if (isSelected) {
+        Button(
+            onClick = onClick,
+            modifier = modifier
+                .padding(4.dp),
+            shape = RoundedCornerShape(16.dp),
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = Color.Blue,
+                contentColor = Color.White
+            )
+        ) {
+            Text(text = text)
+        }
+    } else {
+        OutlinedButton(
+            onClick = onClick,
+            modifier = modifier
+                .padding(4.dp),
+            shape = RoundedCornerShape(16.dp),
+            colors = ButtonDefaults.outlinedButtonColors(
+                contentColor = Color.Black
+            )
+        ) {
+            Text(text = text)
+        }
+    }
+}
+
+
+
+@Composable
+fun CustomTabRow(
+    selectedTabIndex: MutableState<Int>,
+    modifier: Modifier = Modifier,
+    tabs: List<String>,
+    onTabSelected: (Int) -> Unit
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .horizontalScroll(rememberScrollState()),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        tabs.forEachIndexed { index, tabText ->
+            TabButton(
+                text = tabText,
+                isSelected = selectedTabIndex.value == index,
+                onClick = { onTabSelected(index) },
+                modifier = modifier.weight(1f)
+            )
+        }
+    }
 }
