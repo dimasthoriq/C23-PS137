@@ -36,7 +36,9 @@ fun MainScreen() {
         NavHost(
             navController = navController,
             startDestination = Screen.Home.route,
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
         ) {
             composable(Screen.Home.route) {
                 HomeScreen(navController)
@@ -50,8 +52,6 @@ fun MainScreen() {
             composable(Screen.Profile.route) {
                 ProfileScreen(navController)
             }
-
         }
     }
-
 }

@@ -4,12 +4,12 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -32,7 +32,7 @@ fun HomeScreen(navController: NavController) {
         Surface {
             Column {
                 Box(modifier = Modifier.weight(1f)) {
-                    HomeContent()
+                    HomeContent(navController = navController)
                 }
                 Spacer(modifier = Modifier.height(16.dp))
                 BottomNavBar(navController = navController)
@@ -51,9 +51,26 @@ val chips = listOf(
 
 
 @Composable
-fun HomeContent() {
+fun HomeContent(navController: NavController) {
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         item {
+            TopAppBar(
+                title = { Text(text = "") },
+                actions = {
+                    IconButton(onClick = {
+                        navController.navigate("bucket_list")
+                    }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_bucket),
+                            contentDescription = "Bucket List",
+                            tint = Color.Black,
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
+                },
+                backgroundColor = Color.Transparent,
+                elevation = 0.dp
+            )
             Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
                 CategoryChips(chips = chips)
                 Text(

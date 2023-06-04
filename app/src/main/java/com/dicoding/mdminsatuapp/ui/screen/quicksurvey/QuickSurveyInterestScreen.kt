@@ -17,6 +17,7 @@ import com.dicoding.mdminsatuapp.dummy.arts
 import com.dicoding.mdminsatuapp.dummy.edu
 import com.dicoding.mdminsatuapp.dummy.sports
 import com.dicoding.mdminsatuapp.dummy.travel
+import com.dicoding.mdminsatuapp.navigation.Screen
 import com.dicoding.mdminsatuapp.ui.components.ChipData
 import com.dicoding.mdminsatuapp.ui.components.PrimaryButton
 import com.dicoding.mdminsatuapp.ui.components.SurveyChipsGroup
@@ -52,9 +53,7 @@ fun QuickSurveyInterestScreen(
             ) {
                 PrimaryButton(
                     text = "Done",
-                    onClick = {
-
-                    },
+                    onClick = { navController.navigate(Screen.Home.route) },
                     modifier = Modifier.fillMaxWidth()
                 )
             }

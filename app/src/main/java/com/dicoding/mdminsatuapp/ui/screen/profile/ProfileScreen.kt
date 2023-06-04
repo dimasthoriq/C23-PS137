@@ -27,7 +27,6 @@ import com.dicoding.mdminsatuapp.dummy.edu
 import com.dicoding.mdminsatuapp.dummy.sports
 import com.dicoding.mdminsatuapp.dummy.travel
 import com.dicoding.mdminsatuapp.ui.components.*
-import com.dicoding.mdminsatuapp.ui.screen.quicksurvey.QuickSurveyInterestScreen
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -79,6 +78,7 @@ fun ProfileScreen(navController: NavController) {
                                     modifier = Modifier.fillMaxWidth()
                                 )
                             }
+                            Spacer(modifier = Modifier.height(16.dp))
                         }
                     }
                 } else {
@@ -152,12 +152,13 @@ fun ProfileScreen(navController: NavController) {
                             Spacer(modifier = Modifier.height(16.dp))
                         }
                     }
-                    Box {
-                        BottomNavBar(
-                            navController = navController,
-                            modifier = Modifier.align(Alignment.BottomCenter)
-                        )
-                    }
+
+                }
+                Box {
+                    BottomNavBar(
+                        navController = navController,
+                        modifier = Modifier.align(Alignment.BottomCenter)
+                    )
                 }
 
 

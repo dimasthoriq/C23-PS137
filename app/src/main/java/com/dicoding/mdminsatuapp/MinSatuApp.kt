@@ -12,10 +12,15 @@ import androidx.navigation.compose.rememberNavController
 import com.dicoding.mdminsatuapp.ui.screen.MainScreen
 import com.dicoding.mdminsatuapp.ui.screen.OnboardingScreen
 import com.dicoding.mdminsatuapp.ui.screen.SplashScreen
+import com.dicoding.mdminsatuapp.ui.screen.activity.ActivityScreen
+import com.dicoding.mdminsatuapp.ui.screen.bucketlist.BucketListScreen
+import com.dicoding.mdminsatuapp.ui.screen.home.HomeScreen
 import com.dicoding.mdminsatuapp.ui.screen.login.LoginScreen
+import com.dicoding.mdminsatuapp.ui.screen.profile.ProfileScreen
 import com.dicoding.mdminsatuapp.ui.screen.quicksurvey.QuickSurveyBioScreen
 import com.dicoding.mdminsatuapp.ui.screen.quicksurvey.QuickSurveyInterestScreen
 import com.dicoding.mdminsatuapp.ui.screen.register.RegisterScreen
+import com.dicoding.mdminsatuapp.ui.screen.search.SearchScreen
 
 @Composable
 fun MinSatuApp() {
@@ -50,6 +55,21 @@ fun MinSatuApp() {
         }
         composable("main_screen") {
             MainScreen()
+        }
+        composable("home") {
+            HomeScreen(navController = navController)
+        }
+        composable("activity") {
+            ActivityScreen(navController = navController)
+        }
+        composable("search") {
+            SearchScreen(navController = navController)
+        }
+        composable("profile") {
+            ProfileScreen(navController = navController)
+        }
+        composable("bucket_list") {
+            BucketListScreen(navController = navController)
         }
 
     }
