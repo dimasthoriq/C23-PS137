@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import math
 import tensorflow as tf
 import mysql.connector
 import json
@@ -101,6 +102,25 @@ def run_model(xuser, xact, model_filename = 'model.h5'):
     
     return y_out
 
+def haversine(lat1, lon1, lat2, lon2):
+
+    # Convert decimal degrees to radians
+    lat1_rad = math.radians(lat1)
+    lon1_rad = math.radians(lon1)
+    lat2_rad = math.radians(lat2)
+    lon2_rad = math.radians(lon2)
+    
+    # Haversine formula
+    dlon = lon2_rad - lon1_rad
+    dlat = lat2_rad - lat1_rad
+    a = math.sin(dlat/2)**2 + math.cos(lat1_rad) * math.cos(lat2_rad) * math.sin(dlon/2)**2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
+    radius = 6371  # Radius of the Earth in kilometers
+    distance = radius * c
+    
+    # return distance between the two points in kilometers.
+    return distance
+
 def user_inference(user_dict):
     #Convert the new user dictionary into a dataframe
     dt_users = pd.DataFrame(user_dict, index = [0])
@@ -118,14 +138,21 @@ def user_inference(user_dict):
     
     #Preprocess with the defined function
     dt_activities = pd.read_sql("SELECT * FROM activities",  mydb)
+
+    # adding distance values per activity
+    dist = []
+    for i in range(len(dt_activities)):
+      dist.append(haversine(dt_users["latitude"], dt_users["longitude"], dt_activities["latitude"][i], dt_activities["longitude"][i]))
+
     xuser, xact = preprocess_dt(dt_users, dt_activities)
     
     #Run inference with the defined function
     y_out = run_model(xuser, xact, 'model.h5')
     
     #Sorting the values from the highest probability of interest and showing the corresponding activity id
-    y_out = pd.DataFrame(y_out)    
-    y_out.sort_values(by=[0], ascending=False, inplace=True)
+    y_out = pd.DataFrame(y_out)
+    y_out["distance"] = dist     
+    y_out.sort_values(by=[0, 'distance'], ascending=[False, True], inplace=True)
     rank = y_out.index + 1
     return rank
 
