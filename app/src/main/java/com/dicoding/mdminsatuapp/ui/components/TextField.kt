@@ -5,28 +5,32 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CustomTextField() {
-    val textState = remember { mutableStateOf("") }
-
+fun CustomTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    isError: Boolean,
+    isPassword: Boolean = false
+) {
     OutlinedTextField(
         shape = RoundedCornerShape(8.dp),
-        value = textState.value,
-        onValueChange = {
-            textState.value = it
-        },
+        value = value,
+        onValueChange = onValueChange,
         modifier = Modifier
             .height(45.dp)
-
-        )
+            .fillMaxWidth(),
+        isError = isError,
+        visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None
+    )
 }
+
 
 @Composable
 fun LabelTextField(
@@ -60,7 +64,7 @@ fun TextFieldPreview() {
         contentAlignment = Alignment.Center
     ) {
         Column {
-            CustomTextField()
+           // CustomTextField()
         }
 
     }

@@ -44,6 +44,10 @@ fun RegisterScreen(
         val emailState = remember { mutableStateOf("") }
         val passwordState = remember { mutableStateOf("") }
         val confirmPasswordState = remember { mutableStateOf("") }
+        val nameErrorState = remember { mutableStateOf(false) }
+        val emailErrorState = remember { mutableStateOf(false) }
+        val passwordErrorState = remember { mutableStateOf(false) }
+        val confirmPasswordErrorState = remember { mutableStateOf(false) }
 
         Box(
             modifier = Modifier.align(Alignment.BottomCenter)
@@ -94,26 +98,125 @@ fun RegisterScreen(
                     )
 
                     Text("Name")
-                    CustomTextField()
+                    CustomTextField(
+                        value = nameState.value,
+                        onValueChange = {
+                            nameState.value = it
+                            nameErrorState.value = it.isEmpty()
+                        },
+                        isError = nameErrorState.value
+                    )
+                    if (nameErrorState.value) {
+                        Text(
+                            text = "Name cannot be empty",
+                            color = Color.Red,
+                            style = MaterialTheme.typography.caption
+                        )
+                    }
+
                     Spacer(modifier = Modifier.height(20.dp))
+
                     Text("Email")
-                    CustomTextField()
+                    CustomTextField(
+                        value = emailState.value,
+                        onValueChange = {
+                            emailState.value = it
+                            emailErrorState.value = it.isEmpty()
+                        },
+                        isError = emailErrorState.value
+                    )
+                    if (emailErrorState.value) {
+                        Text(
+                            text = "Email cannot be empty",
+                            color = Color.Red,
+                            style = MaterialTheme.typography.caption
+                        )
+                    }
+
                     Spacer(modifier = Modifier.height(20.dp))
+
                     Text("Password")
-                    CustomTextField()
+                    CustomTextField(
+                        value = passwordState.value,
+                        onValueChange = {
+                            passwordState.value = it
+                            passwordErrorState.value = it.isEmpty()
+                        },
+                        isError = passwordErrorState.value,
+                        isPassword = true
+                    )
+
                     Spacer(modifier = Modifier.height(20.dp))
+
+                    if (passwordErrorState.value) {
+                        Text(
+                            text = "Password cannot be empty",
+                            color = Color.Red,
+                            style = MaterialTheme.typography.caption
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(20.dp))
+
                     Text("Confirm Password")
-                    CustomTextField()
+                    CustomTextField(
+                        value = confirmPasswordState.value,
+                        onValueChange = {
+                            confirmPasswordState.value = it
+                            confirmPasswordErrorState.value = when {
+                                it.isEmpty() -> true
+                                it != passwordState.value -> true
+                                else -> false
+                            }
+                        },
+                        isError = confirmPasswordErrorState.value,
+                        isPassword = true
+                    )
+
+                    if (confirmPasswordErrorState.value) {
+                        if (confirmPasswordState.value.isEmpty()) {
+                            Text(
+                                text = "Confirm password cannot be empty",
+                                color = Color.Red,
+                                style = MaterialTheme.typography.caption
+                            )
+                        } else {
+                            Text(
+                                text = "Confirm password must match the password",
+                                color = Color.Red,
+                                style = MaterialTheme.typography.caption
+                            )
+                        }
+                    }
+
                     Spacer(modifier = Modifier.height(20.dp))
+
                     PrimaryButton(
                         text = "REGISTER",
                         onClick = {
-                                  navController.navigate("bio")
+                            if (nameState.value.isEmpty()) {
+                                nameErrorState.value = true
+                            }
+                            if (emailState.value.isEmpty()) {
+                                emailErrorState.value = true
+                            }
+                            if (passwordState.value.isEmpty()) {
+                                passwordErrorState.value = true
+                            }
+                            if (confirmPasswordState.value.isEmpty() || confirmPasswordState.value != passwordState.value) {
+                                confirmPasswordErrorState.value = true
+                            }
+
+                            val allFieldsValid = !nameErrorState.value && !emailErrorState.value && !passwordErrorState.value && !confirmPasswordErrorState.value
+                            if (allFieldsValid) {
+                                navController.navigate("bio")
+                            }
                         },
                         modifier = Modifier.fillMaxWidth()
                     )
 
                     Spacer(modifier = Modifier.height(20.dp))
+
                     Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
                         val text = buildAnnotatedString {
                             withStyle(style = SpanStyle(color = Color.Black)) {
@@ -137,12 +240,9 @@ fun RegisterScreen(
                             }
                         )
                     }
-
                 }
-
             }
         }
-
     }
 }
 
@@ -151,3 +251,5 @@ fun RegisterScreen(
 fun RegisterScreenPreview() {
     RegisterScreen(navController = NavController(LocalContext.current))
 }
+
+

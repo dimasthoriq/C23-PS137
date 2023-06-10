@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.dicoding.mdminsatuapp.maps.LocationViewModel
 import com.dicoding.mdminsatuapp.navigation.Screen
 import com.dicoding.mdminsatuapp.ui.components.BottomNavBar
 import com.dicoding.mdminsatuapp.ui.screen.activity.ActivityScreen
@@ -20,6 +21,8 @@ import com.dicoding.mdminsatuapp.ui.screen.search.SearchScreen
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
+    val locationViewModel = LocationViewModel()
+
 
     Scaffold(
         bottomBar = {
@@ -41,7 +44,7 @@ fun MainScreen() {
                 .padding(innerPadding)
         ) {
             composable(Screen.Home.route) {
-                HomeScreen(navController)
+                HomeScreen(navController, locationViewModel)
             }
             composable(Screen.Activity.route) {
                 ActivityScreen(navController)

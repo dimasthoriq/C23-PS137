@@ -19,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,8 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.dicoding.mdminsatuapp.R
 import com.dicoding.mdminsatuapp.ui.components.CustomTextField
-import com.dicoding.mdminsatuapp.ui.components.DividerTextComponent
-import com.dicoding.mdminsatuapp.ui.components.GoogleButton
 import com.dicoding.mdminsatuapp.ui.components.PrimaryButton
 
 @Composable
@@ -44,6 +43,8 @@ fun LoginScreen(
     ) {
         val emailState = remember { mutableStateOf("") }
         val passwordState = remember { mutableStateOf("") }
+        val emailErrorState = remember { mutableStateOf(false) }
+        val passwordErrorState = remember { mutableStateOf(false) }
 
         Box(
             modifier = Modifier.align(Alignment.BottomCenter)
@@ -94,24 +95,54 @@ fun LoginScreen(
                     )
 
                     Text("Email")
-                    CustomTextField()
+                    CustomTextField(
+                        value = emailState.value,
+                        onValueChange = {
+                            emailState.value = it
+                            emailErrorState.value = it.isEmpty()
+                        },
+                        isError = emailErrorState.value
+                    )
+                    if (emailErrorState.value) {
+                        Text(
+                            text = "Email cannot be empty",
+                            color = Color.Red,
+                            style = MaterialTheme.typography.caption
+                        )
+                    }
                     Spacer(modifier = Modifier.height(20.dp))
                     Text("Password")
-                    CustomTextField()
+                    CustomTextField(
+                        value = passwordState.value,
+                        onValueChange = { passwordState.value = it },
+                        isError = passwordErrorState.value,
+                        isPassword = true
+                    )
+
+                    if (passwordErrorState.value) {
+                        Text(
+                            text = "Password cannot be empty",
+                            color = Color.Red,
+                            style = MaterialTheme.typography.caption
+                        )
+                    }
                     Spacer(modifier = Modifier.height(20.dp))
                     PrimaryButton(
                         text = "LOGIN",
                         onClick = {
-                            navController.navigate("bio")
+                            if (emailState.value.isEmpty()) {
+                                emailErrorState.value = true
+                            }
+                            if (passwordState.value.isEmpty()) {
+                                passwordErrorState.value = true
+                            }
+                            if (!emailErrorState.value && !passwordErrorState.value) {
+                                navController.navigate("bio")
+                            }
                         },
                         modifier = Modifier.fillMaxWidth()
                     )
-                    DividerTextComponent()
-                    GoogleButton(
-                        text = "Sign In with Google",
-                        loadingText = "Creating Account...",
-                        onClicked = {}
-                    )
+
                     Spacer(modifier = Modifier.height(20.dp))
                     Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
                         val text = buildAnnotatedString {
@@ -136,16 +167,10 @@ fun LoginScreen(
                             }
                         )
                     }
-
                 }
-
-
             }
         }
-
     }
-
-
 }
 
 @Preview

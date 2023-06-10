@@ -25,6 +25,7 @@ import com.dicoding.mdminsatuapp.ui.theme.Shapes
 fun CustomOutlinedButton(
     text: String,
     onClick: () -> Unit,
+    enabled: Boolean = true,
     modifier: Modifier = Modifier
 ) {
 
@@ -89,84 +90,7 @@ fun PrimaryButtonPreview() {
     )
 }
 
-@Composable
-fun GoogleButton(
-    modifier: Modifier = Modifier,
-    text: String = "Sign In with Google",
-    loadingText: String = "Creating Account...",
-    icon: Int = R.drawable.ic_google_logo,
-    shape: Shape = Shapes.medium,
-    borderColor: Color = Color.LightGray,
-    backgroundColor: Color = MaterialTheme.colors.surface,
-    progressIndicatorColor: Color = MaterialTheme.colors.primary,
-    onClicked: () -> Unit
-) {
-    var clicked by remember { mutableStateOf(false) }
 
-    Surface(
-        modifier = modifier.clickable { clicked = !clicked },
-        shape = RoundedCornerShape(16.dp),
-        border = BorderStroke(width = 1.dp, color = borderColor),
-        color = backgroundColor
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(
-                    start = 12.dp,
-                    end = 16.dp,
-                    top = 12.dp,
-                    bottom = 12.dp
-                )
-                .animateContentSize(
-                    animationSpec = tween(
-                        durationMillis = 300,
-                        easing = LinearOutSlowInEasing
-                    )
-                ),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                painter = painterResource(id = icon),
-                contentDescription = "Google Button",
-                tint = Color.Unspecified
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-
-            Box(
-                modifier = Modifier.weight(1f).align(Alignment.CenterVertically)
-            ) {
-                Text(
-                    text = if (clicked) loadingText else text,
-                    modifier = Modifier.align(Alignment.Center),
-                    textAlign = TextAlign.Center
-                )
-            }
-
-            if (clicked) {
-                Spacer(modifier = Modifier.width(16.dp))
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .height(16.dp)
-                        .width(16.dp),
-                    strokeWidth = 2.dp,
-                    color = progressIndicatorColor
-                )
-                onClicked()
-            }
-        }
-    }
-}
-
-
-@Preview
-@Composable
-fun GoogleButtonPreview() {
-    GoogleButton(
-        text = "Sign In with Google",
-        loadingText = "Creating Account...",
-        onClicked = {}
-    )
-}
 
 @Composable
 fun TabButton(

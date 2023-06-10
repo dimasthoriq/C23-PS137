@@ -9,6 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.dicoding.mdminsatuapp.maps.GoogleMapView
+import com.dicoding.mdminsatuapp.maps.LocationViewModel
 import com.dicoding.mdminsatuapp.ui.screen.MainScreen
 import com.dicoding.mdminsatuapp.ui.screen.OnboardingScreen
 import com.dicoding.mdminsatuapp.ui.screen.SplashScreen
@@ -25,6 +27,7 @@ import com.dicoding.mdminsatuapp.ui.screen.search.SearchScreen
 @Composable
 fun MinSatuApp() {
     val navController = rememberNavController()
+    val locationViewModel = LocationViewModel()
     NavHost(
         navController = navController,
         startDestination = "splash_screen"
@@ -57,7 +60,7 @@ fun MinSatuApp() {
             MainScreen()
         }
         composable("home") {
-            HomeScreen(navController = navController)
+            HomeScreen(navController = navController,locationViewModel)
         }
         composable("activity") {
             ActivityScreen(navController = navController)
@@ -70,6 +73,9 @@ fun MinSatuApp() {
         }
         composable("bucket_list") {
             BucketListScreen(navController = navController)
+        }
+        composable("maps") {
+            GoogleMapView()
         }
 
     }

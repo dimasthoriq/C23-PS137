@@ -8,4 +8,8 @@ sealed class Screen(val route: String) {
     object DetailActivity : Screen("activity/{activityId}") {
         fun createRoute(activityId: Long) = "activity/$activityId"
     }
+    object QuickSurveyInterest {
+        const val route = "quick_survey_interest"
+    }
+
 }

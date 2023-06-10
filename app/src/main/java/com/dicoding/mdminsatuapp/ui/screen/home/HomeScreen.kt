@@ -5,8 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -17,45 +16,28 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.dicoding.mdminsatuapp.R
 import com.dicoding.mdminsatuapp.dummy.getDummyRecommendationList
+import com.dicoding.mdminsatuapp.maps.LocationViewModel
 import com.dicoding.mdminsatuapp.ui.components.*
 import getDummyActivityList
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(
+    navController: NavController,
+    locationViewModel: LocationViewModel,
+) {
+    val formattedAddress by locationViewModel.formattedAddress.collectAsState()
 
     Scaffold(
-        bottomBar = {
-            BottomNavBar(navController = navController)
-        }
-    ) {
-        Surface {
-            Column {
-                Box(modifier = Modifier.weight(1f)) {
-                    HomeContent(navController = navController)
-                }
-                Spacer(modifier = Modifier.height(16.dp))
-                BottomNavBar(navController = navController)
-            }
-        }
-    }
-}
-
-val chips = listOf(
-    ChipData(R.drawable.ic_travel, "Travel"),
-    ChipData(R.drawable.ic_edu, "Edu"),
-    ChipData(R.drawable.ic_sports, "Sports"),
-    ChipData(R.drawable.ic_art, "Art")
-)
-
-
-
-@Composable
-fun HomeContent(navController: NavController) {
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
-        item {
+        topBar = {
             TopAppBar(
-                title = { Text(text = "") },
+                title = {
+                    IconButton(onClick = {
+                        navController.navigate("maps")
+                    }) {
+                        Text(text = formattedAddress ?: "Nama Lokasi", color = Color.Black)
+                    }
+                },
                 actions = {
                     IconButton(onClick = {
                         navController.navigate("bucket_list")
@@ -71,6 +53,37 @@ fun HomeContent(navController: NavController) {
                 backgroundColor = Color.Transparent,
                 elevation = 0.dp
             )
+        },
+        bottomBar = {
+            BottomNavBar(navController = navController)
+        }
+    ) {
+        Surface {
+            Column {
+                Box(modifier = Modifier.weight(1f)) {
+                    HomeContent(navController = navController, formattedAddress)
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                BottomNavBar(navController = navController)
+            }
+        }
+    }
+}
+
+val chips = listOf(
+    ChipData(R.drawable.ic_travel, "Travel"),
+    ChipData(R.drawable.ic_edu, "Edu"),
+    ChipData(R.drawable.ic_sports, "Sports"),
+    ChipData(R.drawable.ic_art, "Art")
+)
+
+@Composable
+fun HomeContent(
+    navController: NavController,
+    formattedAddress: String?
+) {
+    LazyColumn(modifier = Modifier.fillMaxSize()) {
+        item {
             Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
                 CategoryChips(chips = chips)
                 Text(
@@ -83,7 +96,7 @@ fun HomeContent(navController: NavController) {
                 RecommendationCardsList(getDummyRecommendationList())
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = "Most Popular Activities",
+                    text = "Recommended Activities",
                     style = MaterialTheme.typography.subtitle1,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(start = 8.dp, bottom = 8.dp)
@@ -105,13 +118,11 @@ fun HomeContent(navController: NavController) {
     }
 }
 
-
-
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
     val navController = rememberNavController()
+    val locationViewModel = LocationViewModel()
 
-    HomeScreen(navController = navController)
+    HomeScreen(navController = navController, locationViewModel = locationViewModel)
 }
-
