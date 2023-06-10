@@ -58,10 +58,10 @@ fun ProfileScreen(navController: NavController) {
                             Text(text = "Choose 3 or more activities you might be interested in!")
                         }
 
-                        item { SurveyChipsGroup("Sports", sports) }
-                        item { SurveyChipsGroup("Arts", arts) }
-                        item { SurveyChipsGroup("Travel", travel) }
-                        item { SurveyChipsGroup("Edu", edu) }
+//                        item { SurveyChipsGroup("Sports", sports) }
+//                        item { SurveyChipsGroup("Arts", arts) }
+//                        item { SurveyChipsGroup("Travel", travel) }
+//                        item { SurveyChipsGroup("Edu", edu) }
 
                         item {
                             Spacer(modifier = Modifier.height(32.dp))

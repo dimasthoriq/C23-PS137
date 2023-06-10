@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dicoding.mdminsatuapp.data.local.PreferenceUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -21,14 +22,10 @@ class LocationViewModel : ViewModel() {
     val formattedAddress: StateFlow<String?> = _formattedAddress
 
 
-
     fun setCoordinates(latitude: Double, longitude: Double) {
         coordinates.value = Pair(latitude, longitude)
     }
 
-    fun setFormattedAddress(address: String?) {
-        _formattedAddress.value = address
-    }
 
     fun getFormattedAddress(context: Context, latitude: Double, longitude: Double) {
         val geocoder = Geocoder(context)
@@ -39,13 +36,13 @@ class LocationViewModel : ViewModel() {
                 _formattedAddress.value = formattedAddress
                 Log.d("Location", "Formatted Address: $formattedAddress")
 
+                PreferenceUtils.saveLocationName(context, formattedAddress)
+
             }
         } catch (e: IOException) {
             Log.e("LocationViewModel", "Failed to get formatted address: ${e.message}")
         }
     }
-
-
 
 
 }

@@ -8,13 +8,16 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.dicoding.mdminsatuapp.R
+import com.dicoding.mdminsatuapp.data.local.PreferenceUtils
 import com.dicoding.mdminsatuapp.dummy.getDummyRecommendationList
 import com.dicoding.mdminsatuapp.maps.LocationViewModel
 import com.dicoding.mdminsatuapp.ui.components.*
@@ -26,7 +29,10 @@ fun HomeScreen(
     navController: NavController,
     locationViewModel: LocationViewModel,
 ) {
-    val formattedAddress by locationViewModel.formattedAddress.collectAsState()
+    val context = LocalContext.current
+    val locationName by remember {
+        mutableStateOf(PreferenceUtils.getLocationName(context))
+    }
 
     Scaffold(
         topBar = {
@@ -35,7 +41,13 @@ fun HomeScreen(
                     IconButton(onClick = {
                         navController.navigate("maps")
                     }) {
-                        Text(text = formattedAddress ?: "Nama Lokasi", color = Color.Black)
+                        val truncatedLocationName = truncateString(locationName ?: "Nama Lokasi", 30)
+                        Text(
+                            text = truncatedLocationName,
+                            color = Color.Black,
+                            style = MaterialTheme.typography.h6.copy(fontSize = 16.sp)
+
+                        )
                     }
                 },
                 actions = {
@@ -61,7 +73,7 @@ fun HomeScreen(
         Surface {
             Column {
                 Box(modifier = Modifier.weight(1f)) {
-                    HomeContent(navController = navController, formattedAddress)
+                    HomeContent(navController = navController)
                 }
                 Spacer(modifier = Modifier.height(16.dp))
                 BottomNavBar(navController = navController)
@@ -69,6 +81,16 @@ fun HomeScreen(
         }
     }
 }
+
+@Composable
+fun truncateString(string: String, maxLength: Int): String {
+    return if (string.length > maxLength) {
+        string.take(maxLength) + "..."
+    } else {
+        string
+    }
+}
+
 
 val chips = listOf(
     ChipData(R.drawable.ic_travel, "Travel"),
@@ -80,7 +102,6 @@ val chips = listOf(
 @Composable
 fun HomeContent(
     navController: NavController,
-    formattedAddress: String?
 ) {
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         item {

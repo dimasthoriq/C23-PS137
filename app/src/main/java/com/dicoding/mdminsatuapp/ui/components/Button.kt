@@ -1,25 +1,23 @@
 package com.dicoding.mdminsatuapp.ui.components
 
-import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.LinearOutSlowInEasing
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.*
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.OutlinedButton
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.dicoding.mdminsatuapp.R
-import com.dicoding.mdminsatuapp.ui.theme.Shapes
 
 @Composable
 fun CustomOutlinedButton(
@@ -58,6 +56,7 @@ fun OutlinedButtonPreview() {
 fun PrimaryButton(
     text: String,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     onClick: () -> Unit
 ) {
 
@@ -68,7 +67,7 @@ fun PrimaryButton(
         elevation = ButtonDefaults.elevation(0.dp, 0.dp),
         contentPadding = PaddingValues(64.dp, 12.dp),
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = colorResource(id = R.color.yellow),
+            backgroundColor = if (enabled) colorResource(id = R.color.yellow) else Color.Gray,
             contentColor = colorResource(id = R.color.black)
         )
     ) {

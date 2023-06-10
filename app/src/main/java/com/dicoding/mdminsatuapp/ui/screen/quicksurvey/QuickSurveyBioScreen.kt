@@ -98,8 +98,8 @@ fun QuickSurveyBioScreen(
         ) { snackbarData ->
             Snackbar(
                 modifier = Modifier.padding(8.dp),
-                backgroundColor = MaterialTheme.colors.error,
-                contentColor = Color.White,
+                backgroundColor = Color.White,
+                contentColor = Color.Black,
                 action = {
                     Button(
                         onClick = {

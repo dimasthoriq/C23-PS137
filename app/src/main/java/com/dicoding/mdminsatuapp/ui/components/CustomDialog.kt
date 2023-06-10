@@ -19,7 +19,7 @@ import androidx.compose.ui.window.Dialog
 import com.dicoding.mdminsatuapp.R
 
 @Composable
-fun CustomDialog(
+fun CustomSuccessDialog(
     showDialog: Boolean,
     onDismiss: () -> Unit,
 ) {
@@ -75,8 +75,66 @@ fun CustomDialog(
     }
 }
 
+@Composable
+fun CustomErrorDialog(
+    showDialog: Boolean,
+    onDismiss: () -> Unit,
+) {
+    if (showDialog) {
+        Dialog(onDismissRequest = onDismiss) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Transparent),
+                contentAlignment = Alignment.Center
+            ) {
+                Card(
+                    shape = RoundedCornerShape(12.dp),
+                    modifier = Modifier
+                        .wrapContentHeight()
+                        .padding(16.dp)
+                        .fillMaxWidth(.85f)
+                ) {
+                    Column(
+                        modifier = Modifier.padding(24.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_error),
+                            contentDescription = "Error",
+                            modifier = Modifier.size(100.dp)
+                        )
+                        Text(
+                            text = "Error",
+                            style = MaterialTheme.typography.h6,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center
+                        )
+                        Text(
+                            text = "An error occurred. Please try again later.",
+                            style = MaterialTheme.typography.body1,
+                            textAlign = TextAlign.Center
+                        )
+                        OutlinedButton(
+                            onClick = onDismiss,
+                            border = BorderStroke(2.dp, Color.Red),
+                            colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Red),
+                            shape = RoundedCornerShape(16.dp),
+                            contentPadding = PaddingValues(42.dp, 4.dp)
+                        ) {
+                            Text("OK")
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun DialogPreview() {
-    CustomDialog(showDialog = true, onDismiss = {})
+    //CustomSuccessDialog(showDialog = true, onDismiss = {})
+    CustomErrorDialog(showDialog = true, onDismiss = {})
 }

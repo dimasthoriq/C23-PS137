@@ -24,7 +24,7 @@ data class ChipData(
 )
 
 @Composable
-fun SurveyChipsGroup(title: String, chips: List<ChipData>) {
+fun SurveyChipsGroup(title: String, chips: List<ChipData>, selectedChips: MutableList<ChipData>) {
     Column(modifier = Modifier.padding(start = 0.dp, end = 0.dp, top = 4.dp, bottom = 4.dp)) {
         Text(text = title, style = MaterialTheme.typography.h6)
         Spacer(modifier = Modifier.width(8.dp))
@@ -38,12 +38,14 @@ fun SurveyChipsGroup(title: String, chips: List<ChipData>) {
                     iconResId = chip.icon,
                     text = chip.title,
                     chip = chip,
-                    modifier = Modifier.padding(8.dp)
+                    modifier = Modifier.padding(8.dp),
+                    selectedChips = selectedChips
                 )
             }
         }
     }
 }
+
 
 @Composable
 fun CategoryChips(chips: List<ChipData>) {
@@ -58,7 +60,8 @@ fun CategoryChips(chips: List<ChipData>) {
                     iconResId = chip.icon,
                     text = chip.title,
                     chip = chip,
-                    modifier = Modifier.padding(8.dp)
+                    modifier = Modifier.padding(8.dp),
+
                 )
             }
         }
@@ -72,14 +75,15 @@ fun SurveyChips(
     text: String,
     chip: ChipData,
     modifier: Modifier = Modifier,
-    shape: Shape = RoundedCornerShape(8.dp)
+    shape: Shape = RoundedCornerShape(8.dp),
+    selectedChips: MutableList<ChipData> = mutableListOf()
 ) {
-    var selected by chip.selected
+    val selected by remember { chip.selected }
     val borderColor = if (selected) Color(0xFFFFDE59) else Color.Gray
 
     Column(
         modifier = modifier
-            .clickable { selected = !selected }
+            .clickable { handleChipSelection(chip, selectedChips) }
             .border(1.dp, borderColor, shape = shape)
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .wrapContentWidth(),
@@ -96,6 +100,17 @@ fun SurveyChips(
     }
 }
 
+
+fun handleChipSelection(chip: ChipData, selectedChips: MutableList<ChipData>) {
+    chip.selected.value = !chip.selected.value
+    if (chip.selected.value) {
+        selectedChips.add(chip)
+    } else {
+        selectedChips.remove(chip)
+    }
+}
+
+
 @Preview(showBackground = true)
 @Composable
 fun SurveyChipsPreview() {
@@ -104,24 +119,28 @@ fun SurveyChipsPreview() {
         ChipData(R.drawable.ic_basketball, "Badminton"),
         ChipData(R.drawable.ic_badminton, "Basketball"),
     )
+    val selectedSports = remember { mutableStateListOf<ChipData>() }
 
     val arts = listOf(
         ChipData(R.drawable.ic_pottery, "Pottery"),
         ChipData(R.drawable.ic_painting, "Painting"),
         ChipData(R.drawable.ic_music, "Music"),
     )
+    val selectedArts = remember { mutableStateListOf<ChipData>() }
 
     val travel = listOf(
         ChipData(R.drawable.ic_hiking, "Hiking"),
         ChipData(R.drawable.ic_diving, "Diving"),
         ChipData(R.drawable.ic_rafting, "Rafting"),
     )
+    val selectedTravel = remember { mutableStateListOf<ChipData>() }
 
     val edu = listOf(
         ChipData(R.drawable.ic_workshop, "Workshop"),
         ChipData(R.drawable.ic_teaching, "Teaching"),
         ChipData(R.drawable.ic_study, "Study Club"),
     )
+    val selectedEdu = remember { mutableStateListOf<ChipData>() }
 
     Box(
         modifier = Modifier
@@ -130,15 +149,15 @@ fun SurveyChipsPreview() {
         contentAlignment = Alignment.Center
     ) {
         Column {
-            SurveyChipsGroup("Sports", sports)
-            SurveyChipsGroup("Arts", arts)
-            SurveyChipsGroup("Travel", travel)
-            SurveyChipsGroup("Edu", edu)
+            SurveyChipsGroup("Sports", sports, selectedSports)
+            SurveyChipsGroup("Arts", arts, selectedArts)
+            SurveyChipsGroup("Travel", travel, selectedTravel)
+            SurveyChipsGroup("Edu", edu, selectedEdu)
 
         }
-
     }
 }
+
 
 @Composable
 fun FilterChipsGroup() {
