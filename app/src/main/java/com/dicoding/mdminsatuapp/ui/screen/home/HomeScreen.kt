@@ -40,6 +40,9 @@ fun HomeScreen(
                 title = {
                     IconButton(onClick = {
                         navController.navigate("maps")
+                        locationViewModel.coordinates.value?.let { coordinates ->
+                            locationViewModel.setCoordinates(coordinates.first, coordinates.second)
+                        }
                     }) {
                         val truncatedLocationName = truncateString(locationName ?: "Nama Lokasi", 30)
                         Text(

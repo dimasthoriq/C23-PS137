@@ -37,6 +37,7 @@ class LocationViewModel : ViewModel() {
                 Log.d("Location", "Formatted Address: $formattedAddress")
 
                 PreferenceUtils.saveLocationName(context, formattedAddress)
+                PreferenceUtils.saveCoordinates(context, latitude, longitude)
 
             }
         } catch (e: IOException) {
