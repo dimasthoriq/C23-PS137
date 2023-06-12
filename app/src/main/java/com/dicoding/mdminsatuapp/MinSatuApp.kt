@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -29,6 +30,8 @@ import com.dicoding.mdminsatuapp.ui.screen.search.SearchScreen
 fun MinSatuApp() {
     val navController = rememberNavController()
     val locationViewModel = LocationViewModel()
+    val coroutineScope = rememberCoroutineScope()
+
     NavHost(
         navController = navController,
         startDestination = "splash_screen"
@@ -76,7 +79,7 @@ fun MinSatuApp() {
             BucketListScreen(navController = navController)
         }
         composable("maps") {
-            GoogleMapView(locationViewModel = locationViewModel, context = LocalContext.current)
+            GoogleMapView(locationViewModel = locationViewModel, context = LocalContext.current, scope = coroutineScope)
 
 
 

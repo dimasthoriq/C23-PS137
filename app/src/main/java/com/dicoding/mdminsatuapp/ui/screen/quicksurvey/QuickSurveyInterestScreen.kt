@@ -37,7 +37,7 @@ import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.android.gms.location.LocationServices
 import java.util.*
-
+import kotlin.system.exitProcess
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnrememberedMutableState")
 @OptIn(ExperimentalPermissionsApi::class)
@@ -109,9 +109,12 @@ fun QuickSurveyInterestScreen(navController: NavController) {
                                 }
                             } else {
                                 if (permissionState.permissionRequested) {
-                                    // Handle the case where permission was previously requested but denied by the user
-                                    // You can show a dialog or display a message to the user explaining why the permission is required
-                                    // and prompt them to grant the permission from system settings.
+                                    Toast.makeText(
+                                        context,
+                                        "Location permission is required. Please grant the permission to continue.",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                    exitProcess(0)
                                 } else {
                                     // Request the permission
                                     permissionState.launchPermissionRequest()
@@ -126,7 +129,6 @@ fun QuickSurveyInterestScreen(navController: NavController) {
         }
     }
 }
-
 
 @OptIn(ExperimentalPermissionsApi::class)
 private fun getCurrentLocation(
@@ -165,7 +167,6 @@ private fun getCurrentLocation(
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable

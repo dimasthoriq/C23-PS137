@@ -11,7 +11,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.dicoding.mdminsatuapp.ui.components.CounterButton
+import com.dicoding.mdminsatuapp.ui.components.CounterTextField
 import com.dicoding.mdminsatuapp.ui.components.CustomOutlinedButton
 import com.dicoding.mdminsatuapp.ui.components.DistanceSelection
 import com.dicoding.mdminsatuapp.ui.components.GenderSelection
@@ -32,14 +32,10 @@ fun QuickSurveyBioScreen(
         isNextButtonEnabled = age > 0 && gender.isNotEmpty() && distance.isNotEmpty()
     }
 
-    fun showSnackbar(message: String) {
+    fun showErrorMessage(message: String) {
         coroutineScope.launch {
             scaffoldState.snackbarHostState.showSnackbar(message)
         }
-    }
-
-    fun showErrorMessage(message: String) {
-        showSnackbar(message)
     }
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
@@ -52,7 +48,7 @@ fun QuickSurveyBioScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(text = "How old are you?")
-        CounterButton(age) { newAge ->
+        CounterTextField(age) { newAge ->
             age = newAge
             collectInputs()
         }
@@ -91,31 +87,30 @@ fun QuickSurveyBioScreen(
                 enabled = isNextButtonEnabled
             )
         }
+    }
 
-        SnackbarHost(
-            hostState = scaffoldState.snackbarHostState,
-            modifier = Modifier.padding(16.dp)
-        ) { snackbarData ->
-            Snackbar(
-                modifier = Modifier.padding(8.dp),
-                backgroundColor = Color.White,
-                contentColor = Color.Black,
-                action = {
-                    Button(
-                        onClick = {
-                            scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
-                        }
-                    ) {
-                        Text(text = "Dismiss")
+    SnackbarHost(
+        hostState = scaffoldState.snackbarHostState,
+        modifier = Modifier.padding(16.dp)
+    ) { snackbarData ->
+        Snackbar(
+            modifier = Modifier.padding(8.dp),
+            backgroundColor = Color.White,
+            contentColor = Color.Black,
+            action = {
+                Button(
+                    onClick = {
+                        scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
                     }
+                ) {
+                    Text(text = "Dismiss")
                 }
-            ) {
-                Text(text = snackbarData.message)
             }
+        ) {
+            Text(text = snackbarData.message)
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable

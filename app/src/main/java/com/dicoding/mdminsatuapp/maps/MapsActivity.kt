@@ -13,7 +13,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.dicoding.mdminsatuapp.data.local.PreferenceUtils
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -21,6 +20,9 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.maps.android.compose.*
+import getAddressFromLatLng
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 private const val TAG = "BasicMapActivity"
 
@@ -34,7 +36,9 @@ fun GoogleMapView(
     locationViewModel: LocationViewModel,
     context: Context,
     coordinates: Pair<Double, Double>? = PreferenceUtils.getCoordinates(context),
-    formattedAddress: String? = PreferenceUtils.getLocationName(context)
+    formattedAddress: String? = PreferenceUtils.getLocationName(context),
+    scope: CoroutineScope
+
 ) {
     val initialCameraPosition = CameraPosition.Builder()
         .target(coordinates?.let { LatLng(it.first, it.second) } ?: defaultCameraPosition.target)
@@ -43,6 +47,9 @@ fun GoogleMapView(
 
     val locationState = rememberMarkerState(position = initialCameraPosition.target)
     val markerTitle = formattedAddress ?: "Title"
+
+    val selectedMarkerState = rememberMarkerState(position = LatLng(0.0, 0.0))
+    var selectedAddress by remember { mutableStateOf("") }
 
     var circleCenter by remember { mutableStateOf(locationState.position) }
     if (locationState.dragState == DragState.END) {
@@ -63,8 +70,11 @@ fun GoogleMapView(
             properties = mapProperties,
             uiSettings = uiSettings,
             onMapLoaded = onMapLoaded,
-            onPOIClick = {
-                Log.d(TAG, "POI clicked: ${it.name}")
+            onMapClick = { latLng ->
+                selectedMarkerState.position = latLng
+                scope.launch {
+                    selectedAddress = getAddressFromLatLng(latLng).toString()
+                }
             }
         ) {
             val markerClick: (Marker) -> Boolean = {
@@ -82,7 +92,7 @@ fun GoogleMapView(
                 Text(markerTitle, color = Color.Red)
             }
             MarkerInfoWindowContent(
-                state = rememberMarkerState(position = locationState.position),
+                state = selectedMarkerState,
                 title = "Marker with custom info window.\nZoom in has been tapped $ticker times.",
                 icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE),
                 onClick = markerClick,
@@ -128,6 +138,7 @@ fun GoogleMapView(
 }
 
 
+
 @Composable
 private fun MapTypeControls(
     onMapTypeClick: (MapType) -> Unit
@@ -143,6 +154,8 @@ private fun MapTypeControls(
         }
     }
 }
+
+
 
 @Composable
 private fun MapTypeButton(type: MapType, onClick: () -> Unit) =
@@ -162,8 +175,3 @@ private fun MapButton(text: String, onClick: () -> Unit, modifier: Modifier = Mo
     }
 }
 
-@Preview
-@Composable
-fun GoogleMapViewPreview() {
-    // GoogleMapView(Modifier.fillMaxSize())
-}

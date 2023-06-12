@@ -11,6 +11,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -32,6 +33,8 @@ import com.dicoding.mdminsatuapp.ui.components.*
 @Composable
 fun ProfileScreen(navController: NavController) {
     val selectedTabIndex = remember { mutableStateOf(0) }
+    val selectedChips = remember { mutableStateListOf<ChipData>() }
+    val isSelectedState = remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -58,10 +61,10 @@ fun ProfileScreen(navController: NavController) {
                             Text(text = "Choose 3 or more activities you might be interested in!")
                         }
 
-//                        item { SurveyChipsGroup("Sports", sports) }
-//                        item { SurveyChipsGroup("Arts", arts) }
-//                        item { SurveyChipsGroup("Travel", travel) }
-//                        item { SurveyChipsGroup("Edu", edu) }
+                        item { SurveyChipsGroup("Sports", sports,selectedChips) }
+                        item { SurveyChipsGroup("Arts", arts,selectedChips) }
+                        item { SurveyChipsGroup("Travel", travel,selectedChips) }
+                        item { SurveyChipsGroup("Edu", edu,selectedChips) }
 
                         item {
                             Spacer(modifier = Modifier.height(32.dp))
@@ -134,9 +137,18 @@ fun ProfileScreen(navController: NavController) {
                                 verticalAlignment = Alignment.CenterVertically,
                                 modifier = Modifier.padding(vertical = 16.dp)
                             ) {
-                                GenderChip(text = "Male", isSelected = true)
-                                GenderChip(text = "Female", isSelected = false)
+                                GenderChip(
+                                    text = "Male",
+                                    isSelected = isSelectedState.value,
+                                    onChipClicked = { isSelectedState.value = true }
+                                )
+                                GenderChip(
+                                    text = "Female",
+                                    isSelected = !isSelectedState.value,
+                                    onChipClicked = { isSelectedState.value = false }
+                                )
                             }
+
                             LabelTextField(
                                 label = "Address",
                                 placeholder = "Enter your address",

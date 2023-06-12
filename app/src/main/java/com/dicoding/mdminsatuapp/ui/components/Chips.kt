@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -186,7 +187,9 @@ fun FilterChipsGroup() {
         }
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth().padding(4.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(4.dp)
         ) {
             chips.forEach { chip ->
                 FilterChip(text = chip)
@@ -205,7 +208,10 @@ fun FilterChip(text: String) {
             .background(Color.Transparent)
             .padding(8.dp)
             .border(
-                border = if (isSelected) BorderStroke(1.dp, MaterialTheme.colors.primary) else BorderStroke(1.dp, MaterialTheme.colors.onSurface),
+                border = if (isSelected) BorderStroke(
+                    1.dp,
+                    MaterialTheme.colors.primary
+                ) else BorderStroke(1.dp, MaterialTheme.colors.onSurface),
                 shape = MaterialTheme.shapes.small
             )
 
@@ -230,10 +236,9 @@ fun FilterChipsPreview() {
 
 
 @Composable
-fun GenderChip(text: String, isSelected: Boolean) {
-    val chipColor =  Color.Transparent
-    val borderColor = if (isSelected) Color(0xFFFFA91A) else Color.Gray
-    val textColor =  Color.Black
+fun GenderChip(text: String, isSelected: Boolean, onChipClicked: () -> Unit) {
+    val chipColor = Color.Transparent
+    val borderColor = if (isSelected) colorResource(id = R.color.yellowDark) else Color.LightGray
 
     Box(
         modifier = Modifier
@@ -245,14 +250,24 @@ fun GenderChip(text: String, isSelected: Boolean) {
                 shape = RoundedCornerShape(4.dp)
             )
             .background(chipColor)
-            .clickable { }
+            .clickable { onChipClicked() }
     ) {
-        Text(
-            text = text,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-            style = MaterialTheme.typography.body2,
-            color = textColor
-        )
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            val iconResId = if (text == "Male") R.drawable.ic_male else R.drawable.ic_female
+            Image(
+                painter = painterResource(id = iconResId),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(8.dp)
+            )
+            Text(
+                text = text,
+                modifier = Modifier.padding(start = 8.dp, end = 32.dp, top = 8.dp, bottom = 8.dp),
+                style = MaterialTheme.typography.body2,
+                color = Color.Black
+            )
+        }
     }
 }
+
 

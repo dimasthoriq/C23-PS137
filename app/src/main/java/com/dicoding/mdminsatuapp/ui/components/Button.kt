@@ -5,10 +5,7 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
@@ -105,11 +102,14 @@ fun TabButton(
                 .padding(4.dp),
             shape = RoundedCornerShape(16.dp),
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = Color.Blue,
-                contentColor = Color.White
+                backgroundColor = MaterialTheme.colors.primary,
+                contentColor = Color.Black,
             )
         ) {
-            Text(text = text)
+            Text(
+                text = text,
+                fontWeight = FontWeight.Bold
+            )
         }
     } else {
         OutlinedButton(
