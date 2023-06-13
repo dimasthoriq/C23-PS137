@@ -1,6 +1,5 @@
 package com.dicoding.mdminsatuapp.ui.screen
 
-import android.graphics.LinearGradient
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -14,14 +13,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import kotlinx.coroutines.delay
 import com.dicoding.mdminsatuapp.R
+import com.dicoding.mdminsatuapp.SessionManager
+import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(navController: NavController) {
+fun SplashScreen(navController: NavController, sessionManager: SessionManager) {
     LaunchedEffect(key1 = true) {
         delay(5000)
-        navController.navigate("onboarding")
+        val userId = sessionManager.getUserId()
+        if (userId != null && userId.isNotEmpty()) {
+            navController.navigate("home")
+        } else {
+            navController.navigate("onboarding")
+        }
+
     }
 
     val gradientColorList = listOf(

@@ -44,11 +44,6 @@ fun BottomNavBar(
                 screen = Screen.Activity
             ),
             BottomNavbarItem(
-                title = stringResource(R.string.menu_search),
-                icon = Icons.Default.Search,
-                screen = Screen.Search
-            ),
-            BottomNavbarItem(
                 title = stringResource(R.string.menu_profile),
                 icon = Icons.Default.Person,
                 screen = Screen.Profile

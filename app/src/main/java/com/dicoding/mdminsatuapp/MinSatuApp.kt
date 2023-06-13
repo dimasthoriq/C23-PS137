@@ -28,7 +28,9 @@ import com.dicoding.mdminsatuapp.ui.screen.register.RegisterScreen
 import com.dicoding.mdminsatuapp.ui.screen.search.SearchScreen
 
 @Composable
-fun MinSatuApp() {
+fun MinSatuApp(
+    sessionManager: SessionManager
+) {
     val navController = rememberNavController()
     val locationViewModel = LocationViewModel()
     val coroutineScope = rememberCoroutineScope()
@@ -38,7 +40,7 @@ fun MinSatuApp() {
         startDestination = "splash_screen"
     ) {
         composable("splash_screen") {
-            SplashScreen( navController = navController)
+            SplashScreen( navController = navController, sessionManager)
         }
         composable("onboarding") {
             Column(

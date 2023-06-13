@@ -22,6 +22,8 @@ import com.dicoding.mdminsatuapp.R
 fun CustomSuccessDialog(
     showDialog: Boolean,
     onDismiss: () -> Unit,
+    title: String = "Success",
+    message: String = "You successfully joined an activity, please don’t forget to come to the site."
 ) {
     if (showDialog) {
         Dialog(onDismissRequest = onDismiss) {
@@ -49,13 +51,13 @@ fun CustomSuccessDialog(
                             modifier = Modifier.size(100.dp)
                         )
                         Text(
-                            text = "Join Activity Successs",
+                            text = title,
                             style = MaterialTheme.typography.h6,
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Center
                         )
                         Text(
-                            text = "You successfully joined an activity, please don’t forget to come to the site.",
+                            text = message,
                             style = MaterialTheme.typography.body1,
                             textAlign = TextAlign.Center
                         )
@@ -65,7 +67,7 @@ fun CustomSuccessDialog(
                             colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Green),
                             shape = RoundedCornerShape(16.dp),
                             contentPadding = PaddingValues(42.dp, 4.dp),
-                            ) {
+                        ) {
                             Text("OK")
                         }
                     }
@@ -75,10 +77,13 @@ fun CustomSuccessDialog(
     }
 }
 
+
 @Composable
 fun CustomErrorDialog(
     showDialog: Boolean,
     onDismiss: () -> Unit,
+    title: String = "Error",
+    message: String = "An error occurred. Please try again later."
 ) {
     if (showDialog) {
         Dialog(onDismissRequest = onDismiss) {
@@ -106,13 +111,13 @@ fun CustomErrorDialog(
                             modifier = Modifier.size(100.dp)
                         )
                         Text(
-                            text = "Error",
+                            text = title,
                             style = MaterialTheme.typography.h6,
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Center
                         )
                         Text(
-                            text = "An error occurred. Please try again later.",
+                            text = message,
                             style = MaterialTheme.typography.body1,
                             textAlign = TextAlign.Center
                         )
@@ -133,10 +138,21 @@ fun CustomErrorDialog(
 }
 
 
-
 @Preview(showBackground = true)
 @Composable
 fun DialogPreview() {
-    //CustomSuccessDialog(showDialog = true, onDismiss = {})
-    CustomErrorDialog(showDialog = true, onDismiss = {})
+
+    CustomSuccessDialog(
+        showDialog = true,
+        onDismiss = {},
+        title = "Success",
+        message = "Login Success"
+    )
+
+//    CustomErrorDialog(
+//        showDialog = true,
+//        onDismiss = { /* action when dismissed */ },
+//        title = "Login Failed",
+//        message = "email or password is incorrect"
+//    )
 }

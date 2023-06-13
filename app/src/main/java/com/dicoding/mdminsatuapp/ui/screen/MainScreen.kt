@@ -23,7 +23,6 @@ fun MainScreen() {
     val navController = rememberNavController()
     val locationViewModel = LocationViewModel()
 
-
     Scaffold(
         bottomBar = {
             Box(
@@ -49,9 +48,7 @@ fun MainScreen() {
             composable(Screen.Activity.route) {
                 ActivityScreen(navController)
             }
-            composable(Screen.Search.route) {
-                SearchScreen(navController)
-            }
+
             composable(Screen.Profile.route) {
                 ProfileScreen(navController)
             }

@@ -1,13 +1,13 @@
 package com.dicoding.mdminsatuapp.ui.screen.login
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -19,16 +19,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.dicoding.mdminsatuapp.R
+import com.dicoding.mdminsatuapp.ui.components.CustomErrorDialog
+import com.dicoding.mdminsatuapp.ui.components.CustomSuccessDialog
 import com.dicoding.mdminsatuapp.ui.components.CustomTextField
 import com.dicoding.mdminsatuapp.ui.components.PrimaryButton
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun LoginScreen(
     navController: NavController
@@ -41,10 +44,17 @@ fun LoginScreen(
                 color = Color.Transparent
             )
     ) {
+        val loginViewModel: LoginViewModel = viewModel()
+
         val emailState = remember { mutableStateOf("") }
         val passwordState = remember { mutableStateOf("") }
         val emailErrorState = remember { mutableStateOf(false) }
         val passwordErrorState = remember { mutableStateOf(false) }
+
+        val showDialog = remember { mutableStateOf(false) }
+        val dialogTitle = remember { mutableStateOf("") }
+        val dialogMessage = remember { mutableStateOf("") }
+        val showSuccessDialog = remember { mutableStateOf(false) }
 
         Box(
             modifier = Modifier.align(Alignment.BottomCenter)
@@ -137,7 +147,27 @@ fun LoginScreen(
                                 passwordErrorState.value = true
                             }
                             if (!emailErrorState.value && !passwordErrorState.value) {
-                                navController.navigate("bio")
+                                loginViewModel.loginUser(
+                                    emailState.value,
+                                    passwordState.value,
+                                    onSuccess = {
+                                        dialogTitle.value = "Success"
+                                        dialogMessage.value =
+                                            "Login Success"
+                                        showDialog.value = true
+                                        showSuccessDialog.value = true
+
+                                        if (showSuccessDialog.value) {
+                                            navController.navigate("home")
+                                        }
+
+                                    },
+                                    onError = { errorMessage ->
+                                        dialogTitle.value = "Login Failed"
+                                        dialogMessage.value = errorMessage
+                                        showDialog.value = true
+                                    }
+                                )
                             }
                         },
                         modifier = Modifier.fillMaxWidth()
@@ -170,8 +200,30 @@ fun LoginScreen(
                 }
             }
         }
+
+        if (showDialog.value) {
+            if (showSuccessDialog.value) {
+                CustomSuccessDialog(
+                    showDialog = true,
+                    onDismiss = {
+                        showDialog.value = false
+                    },
+                    title = dialogTitle.value,
+                    message = dialogMessage.value,
+
+                )
+            } else {
+                CustomErrorDialog(
+                    showDialog = true,
+                    onDismiss = { showDialog.value = false },
+                    title = dialogTitle.value,
+                    message = dialogMessage.value
+                )
+            }
+        }
     }
 }
+
 
 @Preview
 @Composable

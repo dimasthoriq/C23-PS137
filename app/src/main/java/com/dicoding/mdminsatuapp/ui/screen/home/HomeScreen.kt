@@ -156,16 +156,7 @@ fun HomeContent(
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.weight(1f)
                     )
-                    Text(
-                        text = "View More",
-                        style = MaterialTheme.typography.caption.copy(
-                            color = Color.Blue,
-                            textDecoration = TextDecoration.Underline
-                        ),
-                        modifier = Modifier.clickable {
-                            navController.navigate("recommendation")
-                        }
-                    )
+
                 }
                 Spacer(modifier = Modifier.height(8.dp))
             }
