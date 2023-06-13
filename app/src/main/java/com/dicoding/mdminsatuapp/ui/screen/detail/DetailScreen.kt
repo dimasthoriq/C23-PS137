@@ -38,7 +38,7 @@ fun DetailScreen() {
         content = {
             Column(
                 modifier = Modifier
-                    .padding(16.dp)
+                    .fillMaxSize()
                     .verticalScroll(rememberScrollState())
             ) {
                 val imageUrl =
@@ -187,7 +187,7 @@ fun ScheduleCard() {
                 }
                 Box(
                     modifier = Modifier
-                        .width(1.dp)
+                        .width(2.dp)
                         .fillMaxHeight()
                         .background(Color(0xFFFFA91A))
                 )

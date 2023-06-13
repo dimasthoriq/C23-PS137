@@ -1,4 +1,4 @@
-package com.dicoding.mdminsatuapp.data.remote
+package com.dicoding.mdminsatuapp.data.remote.retrofit
 
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -18,7 +18,7 @@ class ApiConfig {
                 .addInterceptor(authInterceptor)
                 .build()
             val retrofit = Retrofit.Builder()
-                .baseUrl("http://35.219.0.249:3000/")
+                .baseUrl("http://34.101.210.1:3000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()

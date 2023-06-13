@@ -1,6 +1,3 @@
-import retrofit2.http.GET
-import retrofit2.http.Query
-
 data class GeocodingResponse(
     val results: List<Result>,
     val status: String
@@ -17,12 +14,6 @@ data class GeocodingResponse(
     }
 }
 
-interface GeocodingService {
-    @GET("maps/api/geocode/json")
-    suspend fun reverseGeocode(
-        @Query("latlng") latlng: String,
-        @Query("key") apiKey: String
-    ): GeocodingResponse
-}
+
 
 

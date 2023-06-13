@@ -6,13 +6,10 @@ data class LoginResponse(
     @SerializedName("loginResult")
     val loginResult: LoginResult,
 
-    @SerializedName("error")
-    val error: Boolean,
+    @SerializedName("user_id")
+    val userId: Int,
 
-    @SerializedName("message")
-    val message: String,
-
-    @SerializedName("errorCode")
-    val errorCode: Int?
+    @SerializedName("status")
+    val status: Int?
 )
 

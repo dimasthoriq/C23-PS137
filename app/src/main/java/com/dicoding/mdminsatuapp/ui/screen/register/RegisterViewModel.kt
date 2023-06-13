@@ -1,6 +1,6 @@
 package com.dicoding.mdminsatuapp.ui.screen.register
 
-import com.dicoding.mdminsatuapp.data.remote.ApiService
+import com.dicoding.mdminsatuapp.data.remote.retrofit.ApiService
 import com.dicoding.mdminsatuapp.data.remote.response.RegisterResponse
 import retrofit2.Call
 import retrofit2.Callback

@@ -1,4 +1,4 @@
-package com.dicoding.mdminsatuapp.data.remote
+package com.dicoding.mdminsatuapp.data.remote.retrofit
 
 import com.dicoding.mdminsatuapp.data.remote.response.LoginResponse
 import com.dicoding.mdminsatuapp.data.remote.response.RegisterResponse

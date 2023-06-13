@@ -1,16 +1,23 @@
 package com.dicoding.mdminsatuapp.ui.screen.home
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -18,7 +25,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.dicoding.mdminsatuapp.R
 import com.dicoding.mdminsatuapp.data.local.PreferenceUtils
-import com.dicoding.mdminsatuapp.dummy.getDummyRecommendationList
 import com.dicoding.mdminsatuapp.maps.LocationViewModel
 import com.dicoding.mdminsatuapp.ui.components.*
 import getDummyActivityList
@@ -49,7 +55,6 @@ fun HomeScreen(
                             text = truncatedLocationName,
                             color = Color.Black,
                             style = MaterialTheme.typography.h6.copy(fontSize = 16.sp)
-
                         )
                     }
                 },
@@ -66,24 +71,52 @@ fun HomeScreen(
                     }
                 },
                 backgroundColor = Color.Transparent,
-                elevation = 0.dp
+                elevation = 0.dp,
+                modifier = Modifier.background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(Color(0xFFFFDE59), Color(0xFFFFA91A)),
+                        startY = 0f,
+                        endY = 200f
+                    )
+                )
             )
         },
         bottomBar = {
             BottomNavBar(navController = navController)
         }
     ) {
-        Surface {
-            Column {
+        Box(modifier = Modifier.fillMaxSize()) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(150.dp)
+                    .clip(RoundedCornerShape(bottomStart = 20.dp, bottomEnd = 20.dp))
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(Color(0xFFFFDE59), Color(0xFFFFA91A)),
+                            startY = 0f,
+                            endY = 200f
+                        )
+                    )
+            )
+            Column(
+                modifier = Modifier
+                    .padding(bottom = 20.dp)
+                    .clip(RoundedCornerShape(topStart = 20.dp))
+                    .background(Color.Transparent)
+                    .padding(bottom = 20.dp)
+                    .fillMaxSize()
+            ) {
+                Spacer(modifier = Modifier.height(16.dp))
                 Box(modifier = Modifier.weight(1f)) {
                     HomeContent(navController = navController)
                 }
                 Spacer(modifier = Modifier.height(16.dp))
-                BottomNavBar(navController = navController)
             }
         }
     }
 }
+
 
 @Composable
 fun truncateString(string: String, maxLength: Int): String {
@@ -106,25 +139,34 @@ val chips = listOf(
 fun HomeContent(
     navController: NavController,
 ) {
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
+    LazyColumn(
+        modifier = Modifier.padding(top = 70.dp)
+    ) {
         item {
             Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
-                CategoryChips(chips = chips)
-                Text(
-                    text = "Activities Near Me",
-                    style = MaterialTheme.typography.subtitle1,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(start = 8.dp, bottom = 8.dp)
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                RecommendationCardsList(getDummyRecommendationList())
+                CategoryChipsGroup(chips = chips)
                 Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    text = "Recommended Activities",
-                    style = MaterialTheme.typography.subtitle1,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(start = 8.dp, bottom = 8.dp)
-                )
+                Row(
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Recommended Activities",
+                        style = MaterialTheme.typography.subtitle1,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.weight(1f)
+                    )
+                    Text(
+                        text = "View More",
+                        style = MaterialTheme.typography.caption.copy(
+                            color = Color.Blue,
+                            textDecoration = TextDecoration.Underline
+                        ),
+                        modifier = Modifier.clickable {
+                            navController.navigate("recommendation")
+                        }
+                    )
+                }
                 Spacer(modifier = Modifier.height(8.dp))
             }
         }

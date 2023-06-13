@@ -1,18 +1,13 @@
 package com.dicoding.mdminsatuapp.maps
 
-import GeocodingService
 import android.content.Context
 import android.location.Geocoder
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.dicoding.mdminsatuapp.data.local.PreferenceUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 
 class LocationViewModel : ViewModel() {

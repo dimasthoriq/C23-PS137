@@ -23,6 +23,7 @@ import com.dicoding.mdminsatuapp.ui.screen.login.LoginScreen
 import com.dicoding.mdminsatuapp.ui.screen.profile.ProfileScreen
 import com.dicoding.mdminsatuapp.ui.screen.quicksurvey.QuickSurveyBioScreen
 import com.dicoding.mdminsatuapp.ui.screen.quicksurvey.QuickSurveyInterestScreen
+import com.dicoding.mdminsatuapp.ui.screen.recommended.RecommendedActivityScreen
 import com.dicoding.mdminsatuapp.ui.screen.register.RegisterScreen
 import com.dicoding.mdminsatuapp.ui.screen.search.SearchScreen
 
@@ -80,9 +81,9 @@ fun MinSatuApp() {
         }
         composable("maps") {
             GoogleMapView(locationViewModel = locationViewModel, context = LocalContext.current, scope = coroutineScope)
-
-
-
+        }
+        composable("recommendation") {
+            RecommendedActivityScreen(navController = navController)
         }
 
     }

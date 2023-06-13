@@ -4,6 +4,7 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -49,22 +50,56 @@ fun SurveyChipsGroup(title: String, chips: List<ChipData>, selectedChips: Mutabl
 
 
 @Composable
-fun CategoryChips(chips: List<ChipData>) {
+fun CategoryChipsGroup(chips: List<ChipData>) {
     Column(modifier = Modifier.padding(start = 0.dp, end = 0.dp, top = 4.dp, bottom = 4.dp)) {
         LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             items(chips.size) { index ->
                 val chip = chips[index]
-                SurveyChips(
+                CategoryChip(
                     iconResId = chip.icon,
                     text = chip.title,
-                    chip = chip,
-                    modifier = Modifier.padding(8.dp),
-
                 )
             }
+        }
+    }
+}
+
+@Composable
+fun CategoryChip(
+    iconResId: Int,
+    text: String,
+    modifier: Modifier = Modifier,
+) {
+    Card(
+        backgroundColor = Color.White,
+        shape = RoundedCornerShape(8.dp),
+        elevation = 4.dp,
+        modifier = modifier
+            .clickable { /* Handle chip click here */ }
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .fillMaxWidth()
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(8.dp)
+                .wrapContentSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Image(
+                painter = painterResource(id = iconResId),
+                contentDescription = null,
+                modifier = Modifier.size(24.dp)
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = text,
+                modifier = Modifier
+                    .wrapContentWidth()
+            )
         }
     }
 }
@@ -224,8 +259,6 @@ fun FilterChip(text: String) {
         )
     }
 }
-
-
 
 
 @Preview(showBackground = true)
