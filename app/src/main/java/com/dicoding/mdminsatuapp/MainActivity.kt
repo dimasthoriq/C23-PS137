@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
+import com.dicoding.mdminsatuapp.data.local.SessionManager
 import com.dicoding.mdminsatuapp.ui.theme.MDMinSatuAppTheme
 
 class MainActivity : ComponentActivity() {

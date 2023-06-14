@@ -25,12 +25,13 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 import com.dicoding.mdminsatuapp.R
+import com.dicoding.mdminsatuapp.data.local.SessionManager
 import com.dicoding.mdminsatuapp.ui.components.CustomOutlinedButton
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun OnboardingScreen(navController: NavController) {
+fun OnboardingScreen(navController: NavController, sessionManager: SessionManager) {
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState()
     val (selectedPage,setSelectedPage) = remember {
@@ -121,6 +122,7 @@ fun OnboardingScreen(navController: NavController) {
             } else {
                 CustomOutlinedButton(
                     onClick = {
+                        sessionManager.clearSession()
                         navController.navigate("login")
                     },
                     text = "Get Started",

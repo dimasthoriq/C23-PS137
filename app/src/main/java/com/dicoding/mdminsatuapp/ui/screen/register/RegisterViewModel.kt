@@ -1,37 +1,44 @@
 package com.dicoding.mdminsatuapp.ui.screen.register
 
-import com.dicoding.mdminsatuapp.data.remote.retrofit.ApiService
+import androidx.lifecycle.ViewModel
+import com.dicoding.mdminsatuapp.data.remote.input.RegisterRequest
 import com.dicoding.mdminsatuapp.data.remote.response.RegisterResponse
+import com.dicoding.mdminsatuapp.data.remote.retrofit.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RegisterViewModel(private val apiService: ApiService) {
+class RegisterViewModel : ViewModel() {
+    private val apiService = ApiConfig.getApiService()
 
-    fun register(name: String, email: String, password: String) {
-        val registerCall = apiService.registerRequest(name, email, password)
-        registerCall.enqueue(object : Callback<RegisterResponse> {
-            override fun onResponse(
-                call: Call<RegisterResponse>,
-                response: Response<RegisterResponse>
-            ) {
+    fun registerUser(
+        name: String,
+        email: String,
+        password: String,
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit
+    ) {
+        val register = RegisterRequest(name, email, password)
+        apiService.registerRequest(register).enqueue(object : Callback<RegisterResponse> {
+            override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
                 if (response.isSuccessful) {
-                    // Tangani response berhasil di sini
                     val registerResponse = response.body()
-                    // Lakukan sesuatu dengan data response yang diterima
+                    if (registerResponse?.code == "200") {
+                        onSuccess()
+                    } else {
+                        onError(registerResponse?.message ?: "Failed to register")
+                    }
                 } else {
-                    // Tangani response gagal di sini
-                    // Misalnya, menampilkan pesan error kepada pengguna
+                    onError("Failed to register")
                 }
             }
 
+
             override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-                // Tangani kegagalan request di sini
-                // Misalnya, menampilkan pesan error kepada pengguna
+                onError(t.message ?: "Unknown error occurred")
             }
+
         })
-
-
     }
 
 }

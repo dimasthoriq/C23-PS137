@@ -109,28 +109,32 @@ fun HomeScreen(
                 Box() {
                     HomeContent(navController = navController)
                 }
-                LazyColumn(
-                    modifier = Modifier.weight(1f),
-                    contentPadding = PaddingValues(vertical = 8.dp)
-                ) {
-                    items(getDummyRecommendationList()) { card ->
-                        RecommendationCard(
-                            title = card.title,
-                            photoUrl = card.photoUrl,
-                            date = card.date,
-                            time = card.time,
-                            location = card.location,
-                            dateIcon = card.dateIcon,
-                            timeIcon = card.timeIcon,
-                            locationIcon = card.locationIcon,
-                            modifier = Modifier
-                                .padding(vertical = 8.dp)
-                                .fillMaxWidth()
-                        )
-
-                    }
-                }
+                LoadRecommendationData()
             }
+        }
+    }
+}
+
+@Composable
+fun LoadRecommendationData() {
+    LazyColumn(
+        contentPadding = PaddingValues(vertical = 8.dp)
+    ) {
+        items(getDummyRecommendationList()) { card ->
+            RecommendationCard(
+                title = card.title,
+                photoUrl = card.photoUrl,
+                date = card.date,
+                time = card.time,
+                location = card.location,
+                dateIcon = card.dateIcon,
+                timeIcon = card.timeIcon,
+                locationIcon = card.locationIcon,
+                modifier = Modifier
+                    .padding(vertical = 8.dp)
+                    .fillMaxWidth()
+            )
+
         }
     }
 }
@@ -167,7 +171,7 @@ fun HomeContent(
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = "Recommended Activities",
-            style = MaterialTheme.typography.subtitle1,
+            style = MaterialTheme.typography.h6,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
         )

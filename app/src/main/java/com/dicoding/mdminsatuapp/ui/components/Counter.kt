@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -26,26 +27,35 @@ import androidx.compose.ui.unit.sp
 fun CounterTextField(age: Int, onAgeChange: (Int) -> Unit) {
     val textColor = Color(0xFF000000)
     val focusRequester = remember { FocusRequester() }
+    val isFocused = remember { mutableStateOf(false) }
 
-    val textFieldValue = remember { mutableStateOf(TextFieldValue(text = age.toString())) }
+    val textFieldValue = remember {
+        mutableStateOf(TextFieldValue(text = if (age == 0) "" else age.toString()))
+    }
 
     Column(modifier = Modifier.padding(8.dp)) {
         OutlinedTextField(
             value = textFieldValue.value,
             onValueChange = { value ->
-                textFieldValue.value = value.copy(text = value.text.filter { it.isDigit() })
-                val newAge = value.text.toIntOrNull() ?: 0
-                onAgeChange(newAge)
+                val newValue = value.text.filter { it.isDigit() }
+                if (newValue.isEmpty()) {
+                    textFieldValue.value = TextFieldValue(text = "")
+                } else {
+                    textFieldValue.value = value.copy(text = newValue)
+                    val newAge = newValue.toInt()
+                    onAgeChange(newAge)
+                }
             },
             modifier = Modifier
                 .focusRequester(focusRequester)
-                .padding(top = 8.dp, bottom = 4.dp),
+                .padding(top = 8.dp, bottom = 4.dp)
+                .onFocusChanged { isFocused.value = it.isFocused },
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Color.Transparent
+                backgroundColor = Color.Transparent,
+                textColor = if (isFocused.value) textColor else Color.Transparent
             ),
             textStyle = TextStyle(
                 fontWeight = FontWeight.Bold,
-                color = textColor,
                 fontSize = 16.sp
             ),
             singleLine = true,
@@ -56,6 +66,9 @@ fun CounterTextField(age: Int, onAgeChange: (Int) -> Unit) {
         )
     }
 }
+
+
+
 
 @Preview(showBackground = true)
 @Composable

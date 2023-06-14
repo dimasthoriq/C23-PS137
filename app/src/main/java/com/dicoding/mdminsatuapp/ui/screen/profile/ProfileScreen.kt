@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.dicoding.mdminsatuapp.data.local.SessionManager
 import com.dicoding.mdminsatuapp.dummy.arts
 import com.dicoding.mdminsatuapp.dummy.edu
 import com.dicoding.mdminsatuapp.dummy.sports
@@ -31,10 +32,15 @@ import com.dicoding.mdminsatuapp.ui.components.*
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun ProfileScreen(navController: NavController) {
+fun ProfileScreen(
+    navController: NavController,
+    sessionManager: SessionManager
+) {
     val selectedTabIndex = remember { mutableStateOf(0) }
     val selectedChips = remember { mutableStateListOf<ChipData>() }
     val isSelectedState = remember { mutableStateOf(false) }
+    val showLogoutDialog = remember { mutableStateOf(false) }
+
 
     Scaffold(
         topBar = {
@@ -158,7 +164,10 @@ fun ProfileScreen(navController: NavController) {
                             Spacer(modifier = Modifier.height(16.dp))
                             PrimaryButton(
                                 text = "Logout",
-                                onClick = {},
+                                onClick = {
+                                    showLogoutDialog.value = true
+
+                                },
                                 modifier = Modifier.fillMaxWidth()
                             )
                             Spacer(modifier = Modifier.height(16.dp))
@@ -177,13 +186,28 @@ fun ProfileScreen(navController: NavController) {
             }
         }
     )
+
+    CustomSuccessDialog(
+        showDialog = showLogoutDialog.value,
+        onDismiss = {
+            showLogoutDialog.value = false
+            sessionManager.clearSession()
+            navController.navigate("splash_screen")
+        },
+        title = "Success",
+        message = "Logout Success"
+    )
+
 }
 
 
 @Preview(showBackground = true)
 @Composable
 fun ProfileScreenPreview() {
-    ProfileScreen(navController = NavController(LocalContext.current))
+    ProfileScreen(
+        navController = NavController(LocalContext.current),
+        sessionManager = SessionManager(context = LocalContext.current)
+    )
 }
 
 

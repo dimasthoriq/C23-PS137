@@ -1,4 +1,4 @@
-package com.dicoding.mdminsatuapp
+package com.dicoding.mdminsatuapp.data.local
 
 import android.content.Context
 import android.content.SharedPreferences

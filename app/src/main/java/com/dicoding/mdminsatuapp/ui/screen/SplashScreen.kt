@@ -14,7 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.dicoding.mdminsatuapp.R
-import com.dicoding.mdminsatuapp.SessionManager
+import com.dicoding.mdminsatuapp.data.local.SessionManager
 import kotlinx.coroutines.delay
 
 @Composable

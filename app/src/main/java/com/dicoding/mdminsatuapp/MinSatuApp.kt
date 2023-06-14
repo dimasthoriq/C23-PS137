@@ -11,6 +11,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.dicoding.mdminsatuapp.data.local.SessionManager
 import com.dicoding.mdminsatuapp.maps.GoogleMapView
 import com.dicoding.mdminsatuapp.maps.LocationViewModel
 import com.dicoding.mdminsatuapp.ui.screen.MainScreen
@@ -35,6 +36,7 @@ fun MinSatuApp(
     val locationViewModel = LocationViewModel()
     val coroutineScope = rememberCoroutineScope()
 
+
     NavHost(
         navController = navController,
         startDestination = "splash_screen"
@@ -48,11 +50,11 @@ fun MinSatuApp(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                OnboardingScreen(navController = navController)
+                OnboardingScreen(navController = navController,sessionManager)
             }
         }
         composable("login") {
-            LoginScreen( navController = navController)
+            LoginScreen( navController = navController, sessionManager)
         }
         composable("register") {
             RegisterScreen( navController = navController)
@@ -64,7 +66,7 @@ fun MinSatuApp(
             QuickSurveyInterestScreen(navController = navController)
         }
         composable("main_screen") {
-            MainScreen()
+            MainScreen(sessionManager)
         }
         composable("home") {
             HomeScreen(navController = navController,locationViewModel)
@@ -76,7 +78,7 @@ fun MinSatuApp(
             SearchScreen(navController = navController)
         }
         composable("profile") {
-            ProfileScreen(navController = navController)
+            ProfileScreen(navController = navController, sessionManager)
         }
         composable("bucket_list") {
             BucketListScreen(navController = navController)
