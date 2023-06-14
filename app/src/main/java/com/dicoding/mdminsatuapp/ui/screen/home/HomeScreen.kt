@@ -2,14 +2,14 @@ package com.dicoding.mdminsatuapp.ui.screen.home
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
@@ -17,7 +17,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -25,9 +24,9 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.dicoding.mdminsatuapp.R
 import com.dicoding.mdminsatuapp.data.local.PreferenceUtils
+import com.dicoding.mdminsatuapp.dummy.getDummyRecommendationList
 import com.dicoding.mdminsatuapp.maps.LocationViewModel
 import com.dicoding.mdminsatuapp.ui.components.*
-import getDummyActivityList
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -101,17 +100,36 @@ fun HomeScreen(
             )
             Column(
                 modifier = Modifier
-                    .padding(bottom = 20.dp)
                     .clip(RoundedCornerShape(topStart = 20.dp))
                     .background(Color.Transparent)
-                    .padding(bottom = 20.dp)
                     .fillMaxSize()
+
             ) {
                 Spacer(modifier = Modifier.height(16.dp))
-                Box(modifier = Modifier.weight(1f)) {
+                Box() {
                     HomeContent(navController = navController)
                 }
-                Spacer(modifier = Modifier.height(16.dp))
+                LazyColumn(
+                    modifier = Modifier.weight(1f),
+                    contentPadding = PaddingValues(vertical = 8.dp)
+                ) {
+                    items(getDummyRecommendationList()) { card ->
+                        RecommendationCard(
+                            title = card.title,
+                            photoUrl = card.photoUrl,
+                            date = card.date,
+                            time = card.time,
+                            location = card.location,
+                            dateIcon = card.dateIcon,
+                            timeIcon = card.timeIcon,
+                            locationIcon = card.locationIcon,
+                            modifier = Modifier
+                                .padding(vertical = 8.dp)
+                                .fillMaxWidth()
+                        )
+
+                    }
+                }
             }
         }
     }
@@ -139,41 +157,25 @@ val chips = listOf(
 fun HomeContent(
     navController: NavController,
 ) {
-    LazyColumn(
-        modifier = Modifier.padding(top = 70.dp)
+    Column(
+        modifier = Modifier
+            .padding(horizontal = 16.dp)
+            .verticalScroll(rememberScrollState())
     ) {
-        item {
-            Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
-                CategoryChipsGroup(chips = chips)
-                Spacer(modifier = Modifier.height(16.dp))
-                Row(
-                    modifier = Modifier.padding(horizontal = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "Recommended Activities",
-                        style = MaterialTheme.typography.subtitle1,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.weight(1f)
-                    )
+        Spacer(modifier = Modifier.height(70.dp))
+        CategoryChipsGroup(chips = chips)
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(
+            text = "Recommended Activities",
+            style = MaterialTheme.typography.subtitle1,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+        )
 
-                }
-                Spacer(modifier = Modifier.height(8.dp))
-            }
-        }
-        items(getDummyActivityList()) { activity ->
-            ActivityCard(
-                title = activity[0],
-                photoUrl = activity[1],
-                date = activity[2],
-                location = activity[3],
-                dateIcon = R.drawable.ic_calendar,
-                locationIcon = R.drawable.ic_location,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-            )
-        }
     }
 }
+
+
 
 @Preview(showBackground = true)
 @Composable
