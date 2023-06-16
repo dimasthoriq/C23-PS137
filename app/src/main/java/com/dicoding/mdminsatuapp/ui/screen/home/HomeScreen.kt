@@ -44,7 +44,8 @@ fun HomeScreen(
     locationViewModel: LocationViewModel,
 ) {
     val context = LocalContext.current
-    val locationName = locationViewModel.formattedAddress.collectAsState().value ?: "Nama Lokasi"
+    val locationName = locationViewModel.formattedAddress.collectAsState().value
+        ?: "Jalan Pemuda, RT. 7 / RW. 14, Rawamangun"
     val permissionState = rememberPermissionState(Manifest.permission.ACCESS_FINE_LOCATION)
     val isGettingLocation = remember { mutableStateOf(false) }
 
@@ -114,7 +115,12 @@ fun HomeScreen(
                         onClick = {
                             if (!isGettingLocation.value) {
                                 isGettingLocation.value = true
-                                getCurrentLocation(context, navController, permissionState, locationViewModel)
+                                getCurrentLocation(
+                                    context,
+                                    navController,
+                                    permissionState,
+                                    locationViewModel
+                                )
                                 isGettingLocation.value = false
                             }
                         },
@@ -144,14 +150,14 @@ fun HomeScreen(
                 Box {
                     HomeContent(navController = navController)
                 }
-                LoadRecommendationData()
+                LoadRecommendationData(navController = navController)
             }
         }
     }
 }
 
 @Composable
-fun LoadRecommendationData() {
+fun LoadRecommendationData(navController: NavController) {
     LazyColumn(
         contentPadding = PaddingValues(vertical = 8.dp)
     ) {
@@ -167,7 +173,8 @@ fun LoadRecommendationData() {
                 locationIcon = card.locationIcon,
                 modifier = Modifier
                     .padding(vertical = 8.dp)
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                onClick = { navController.navigate("detail_activity") }
             )
         }
     }
@@ -199,7 +206,7 @@ fun HomeContent(
             .verticalScroll(rememberScrollState())
     ) {
         Spacer(modifier = Modifier.height(70.dp))
-        CategoryChipsGroup(chips = chips)
+        CategoryChipsGroup(chips = chips, navController = navController)
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = "Recommended Activities",

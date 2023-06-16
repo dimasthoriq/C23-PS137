@@ -25,7 +25,7 @@ fun BucketListScreen(navController: NavController) {
     Scaffold(
         topBar = {
             TopBar(
-                text = "BucketList",
+                text = "Bucket List",
                 navigationIcon = Icons.Default.ArrowBack,
                 onNavigationIconClick = { navController.popBackStack() }
             )

@@ -13,12 +13,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.dicoding.mdminsatuapp.R
 import com.dicoding.mdminsatuapp.ui.components.PrimaryButton
@@ -26,13 +29,13 @@ import com.dicoding.mdminsatuapp.ui.components.TopBar
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun DetailScreen() {
+fun DetailScreen(navController: NavController) {
     Scaffold(
         topBar = {
             TopBar(
                 text = "Detail Activity",
                 navigationIcon = Icons.Default.ArrowBack,
-                onNavigationIconClick = { /* Handle navigation icon click */ }
+                onNavigationIconClick = { navController.popBackStack()  }
             )
         },
         content = {
@@ -42,7 +45,7 @@ fun DetailScreen() {
                     .verticalScroll(rememberScrollState())
             ) {
                 val imageUrl =
-                    "https://raw.githubusercontent.com/okkyPratama/composedummyimages/main/data-dummy-compose-app/product_1.jpg"
+                    "https://raw.githubusercontent.com/okkyPratama/minsatuDummyImg/main/header_4.jpg"
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -57,9 +60,6 @@ fun DetailScreen() {
                     )
                 }
 
-
-                Spacer(modifier = Modifier.height(8.dp))
-
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -68,9 +68,12 @@ fun DetailScreen() {
                     horizontalArrangement = Arrangement.SpaceBetween,
                     content = {
                         Text(
-                            text = "Nama Aktivitas",
+                            text = "Wahooo!!!",
                             fontWeight = FontWeight.Bold,
-                            fontSize = 24.sp
+                            fontSize = 24.sp,
+                            modifier = Modifier.padding(bottom = 2.dp),
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis
                         )
 
                         Column(
@@ -78,8 +81,8 @@ fun DetailScreen() {
                             horizontalAlignment = Alignment.End,
                             content = {
                                 Text(
-                                    text = "20",
-                                    fontSize = 24.sp,
+                                    text = "50",
+                                    fontSize = 22.sp,
                                     fontWeight = FontWeight.Bold,
                                     color = Color(0xFFFFA91A),
                                     modifier = Modifier.size(36.dp)
@@ -91,7 +94,6 @@ fun DetailScreen() {
                                 )
                             }
                         )
-
 
                     }
                 )
@@ -106,13 +108,13 @@ fun DetailScreen() {
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = "Nama Komunitas",
+                        text = "Wahooo",
                         textDecoration = TextDecoration.Underline
                     )
                 }
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = "Deskripsi Aktivitas",
+                    text = "Promo family Wahooo Waterworld, Kota Baru Parahyangan",
                     fontSize = 16.sp,
                     modifier = Modifier.padding(horizontal = 16.dp)
                 )
@@ -137,7 +139,7 @@ fun DetailScreen() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewDetailScreen() {
-    DetailScreen()
+    DetailScreen(navController = NavController(LocalContext.current))
 }
 
 @Composable
@@ -174,12 +176,12 @@ fun ScheduleCard() {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            text = "25",
+                            text = "02",
                             fontWeight = FontWeight.Bold,
                             fontSize = 16.sp
                         )
                         Text(
-                            text = "Jan",
+                            text = "Jul",
                             fontWeight = FontWeight.Bold,
                             fontSize = 16.sp
                         )
@@ -198,9 +200,9 @@ fun ScheduleCard() {
                         .padding(top = 8.dp, bottom = 4.dp),
                     verticalArrangement = Arrangement.Center
                 ) {
-                    Text(text = "Monday", fontWeight = FontWeight.Bold)
+                    Text(text = "Sunday", fontWeight = FontWeight.Bold)
                     Spacer(modifier = Modifier.height(4.dp))
-                    Text(text = "09:00 - 11:00")
+                    Text(text = "07:00 - 09:00")
                 }
             }
             Box(
@@ -215,11 +217,11 @@ fun ScheduleCard() {
                     border = BorderStroke(1.dp, Color(0xFFFFDE59)),
                     colors = ButtonDefaults.outlinedButtonColors(
                         backgroundColor = Color.Transparent,
-                        contentColor = Color(0xFFFFDE59)
+                        contentColor = Color(0xFFFFA91A)
                     )
                 ) {
                     Text(
-                        text = "45 minutes",
+                        text = "120 minutes",
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -228,6 +230,8 @@ fun ScheduleCard() {
         }
     }
 }
+
+
 
 @Preview(showBackground = true)
 @Composable

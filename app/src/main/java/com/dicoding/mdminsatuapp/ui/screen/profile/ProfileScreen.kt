@@ -100,28 +100,6 @@ fun ProfileScreen(
                         }
                     }
                 } else {
-                    Box(
-                        modifier = Modifier
-                            .size(70.dp)
-                            .clip(RoundedCornerShape(60.dp))
-                            .background(color = Color.Transparent)
-                            .align(Alignment.CenterHorizontally)
-                            .border(
-                                width = 2.dp,
-                                color = Color.Black,
-                                shape = RoundedCornerShape(60.dp)
-                            ),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Person,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(70.dp)
-                                .align(Alignment.Center)
-                                .padding(16.dp)
-                        )
-                    }
                     LazyColumn(
                         modifier = Modifier.weight(1f),
                         contentPadding = PaddingValues(horizontal = 16.dp)

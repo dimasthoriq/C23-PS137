@@ -17,6 +17,8 @@ import com.dicoding.mdminsatuapp.ui.screen.OnboardingScreen
 import com.dicoding.mdminsatuapp.ui.screen.SplashScreen
 import com.dicoding.mdminsatuapp.ui.screen.activity.ActivityScreen
 import com.dicoding.mdminsatuapp.ui.screen.bucketlist.BucketListScreen
+import com.dicoding.mdminsatuapp.ui.screen.category.CategoryActivityScreen
+import com.dicoding.mdminsatuapp.ui.screen.detail.DetailScreen
 import com.dicoding.mdminsatuapp.ui.screen.home.HomeScreen
 import com.dicoding.mdminsatuapp.ui.screen.login.LoginScreen
 import com.dicoding.mdminsatuapp.ui.screen.profile.ProfileScreen
@@ -71,6 +73,9 @@ fun MinSatuApp(
         composable("home") {
             HomeScreen(navController = navController,locationViewModel)
         }
+        composable("category/{category}") { backStackEntry ->
+            CategoryActivityScreen(navController = navController, category = backStackEntry.arguments?.getString("category") ?: "Category")
+        }
         composable("activity") {
             ActivityScreen(navController = navController)
         }
@@ -83,9 +88,11 @@ fun MinSatuApp(
         composable("bucket_list") {
             BucketListScreen(navController = navController)
         }
-
         composable("recommendation") {
             RecommendedActivityScreen(navController = navController)
+        }
+        composable("detail_activity") {
+            DetailScreen(navController = navController)
         }
 
     }

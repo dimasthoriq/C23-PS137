@@ -17,6 +17,18 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.dicoding.mdminsatuapp.R
 
+
+data class ActivityCardData(
+    val title: String,
+    val photoUrl: String,
+    val date: String,
+    val location: String,
+    val dateIcon: Int,
+    val locationIcon: Int,
+)
+
+
+
 @Composable
 fun ActivityCard(
     title: String,

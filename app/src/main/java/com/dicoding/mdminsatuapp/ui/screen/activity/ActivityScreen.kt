@@ -20,12 +20,18 @@ import com.dicoding.mdminsatuapp.ui.components.ActivityCard
 import com.dicoding.mdminsatuapp.ui.components.BottomNavBar
 import com.dicoding.mdminsatuapp.ui.components.TopBar
 import com.dicoding.mdminsatuapp.R
+import getDummyDoneActivities
+import getDummyUpcomingActivities
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun ActivityScreen(navController: NavController) {
     val tabTitles = listOf("Upcoming", "Done")
     var selectedTabIndex by mutableStateOf(0)
+
+    val upcomingActivities = getDummyUpcomingActivities()
+    val doneActivities = getDummyDoneActivities()
+
 
     Scaffold(
         topBar = {
@@ -58,18 +64,38 @@ fun ActivityScreen(navController: NavController) {
                 }
             }
             LazyColumn {
-                items(10) { index ->
-                    ActivityCard(
-                        title = "Activity $index",
-                        photoUrl = "https://raw.githubusercontent.com/okkyPratama/composedummyimages/main/data-dummy-compose-app/product_1.jpg",
-                        date = "Date",
-                        location = "Location",
-                        dateIcon = R.drawable.ic_calendar,
-                        locationIcon = R.drawable.ic_location,
-                        modifier = Modifier.padding(8.dp)
-                    )
+                when (selectedTabIndex) {
+                    0 -> {
+                        items(upcomingActivities.size) { index ->
+                            val activity = upcomingActivities[index]
+                            ActivityCard(
+                                title = activity.title,
+                                photoUrl = activity.photoUrl,
+                                date = activity.date,
+                                location = activity.location,
+                                dateIcon = activity.dateIcon,
+                                locationIcon = activity.locationIcon,
+                                modifier = Modifier.padding(8.dp)
+                            )
+                        }
+                    }
+                    1 -> {
+                        items(doneActivities.size) { index ->
+                            val activity = doneActivities[index]
+                            ActivityCard(
+                                title = activity.title,
+                                photoUrl = activity.photoUrl,
+                                date = activity.date,
+                                location = activity.location,
+                                dateIcon = activity.dateIcon,
+                                locationIcon = activity.locationIcon,
+                                modifier = Modifier.padding(8.dp)
+                            )
+                        }
+                    }
                 }
             }
+
         }
     }
 }

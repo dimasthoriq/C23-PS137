@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -19,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.dicoding.mdminsatuapp.R
 import com.dicoding.mdminsatuapp.ui.screen.quicksurvey.QuickSurveyViewModel
 
@@ -258,7 +260,10 @@ fun GenderChip(text: String, isSelected: Boolean, onChipClicked: () -> Unit) {
 }
 
 @Composable
-fun CategoryChipsGroup(chips: List<ChipData>) {
+fun CategoryChipsGroup(
+    chips: List<ChipData>,
+    navController: NavController
+) {
     Column(modifier = Modifier.padding(start = 0.dp, end = 0.dp, top = 4.dp, bottom = 4.dp)) {
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -269,6 +274,7 @@ fun CategoryChipsGroup(chips: List<ChipData>) {
                 CategoryChip(
                     iconResId = chip.icon,
                     text = chip.title,
+                    navController = navController
                 )
             }
         }
@@ -279,6 +285,7 @@ fun CategoryChipsGroup(chips: List<ChipData>) {
 fun CategoryChip(
     iconResId: Int,
     text: String,
+    navController: NavController,
     modifier: Modifier = Modifier,
 ) {
     Card(
@@ -286,7 +293,7 @@ fun CategoryChip(
         shape = RoundedCornerShape(8.dp),
         elevation = 4.dp,
         modifier = modifier
-            .clickable { /* Handle chip click here */ }
+            .clickable { navController.navigate("category/${text}") }
             .padding(8.dp)
             .fillMaxWidth()
     ) {
@@ -311,3 +318,4 @@ fun CategoryChip(
         }
     }
 }
+

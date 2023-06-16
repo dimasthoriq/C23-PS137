@@ -1,5 +1,6 @@
 package com.dicoding.mdminsatuapp.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -43,6 +44,7 @@ fun RecommendationCard(
     timeIcon: Int,
     locationIcon: Int,
     modifier: Modifier = Modifier,
+    onClick: () -> Unit = {}
 ) {
     Card(
         shape = RoundedCornerShape(8.dp),
@@ -50,6 +52,8 @@ fun RecommendationCard(
             .padding( vertical = 4.dp, horizontal = 16.dp)
             .fillMaxWidth()
             .shadow(4.dp)
+            .clickable(onClick = onClick)
+
     ) {
         Column(
             modifier = Modifier.fillMaxWidth()
