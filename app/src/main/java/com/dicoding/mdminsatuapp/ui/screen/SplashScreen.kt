@@ -25,7 +25,7 @@ fun SplashScreen(navController: NavController, sessionManager: SessionManager) {
         if (userId != null && userId.isNotEmpty()) {
             navController.navigate("home")
         } else {
-            navController.navigate("onboarding")
+            navController.navigate("login")
         }
 
     }

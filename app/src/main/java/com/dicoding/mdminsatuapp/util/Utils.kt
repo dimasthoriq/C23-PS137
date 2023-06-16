@@ -1,32 +1,53 @@
-import com.google.android.gms.maps.model.LatLng
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import org.json.JSONObject
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationManager
+import android.util.Log
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.navigation.NavController
+import com.dicoding.mdminsatuapp.maps.LocationViewModel
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.PermissionState
+import com.google.android.gms.location.LocationServices
 
-suspend fun getAddressFromLatLng(latLng: LatLng): String? = withContext(Dispatchers.IO) {
-    val apiKey = "AIzaSyAlAhdAr_iWzpxW_nLFHoB3A7U7b_uFcDI"
-    val url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=${latLng.latitude},${latLng.longitude}&key=$apiKey"
+@OptIn(ExperimentalPermissionsApi::class)
+fun getCurrentLocation(
+    context: Context,
+    navController: NavController,
+    permissionState: PermissionState,
+    locationViewModel: LocationViewModel,
+) {
+    val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
+    val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-    val client = OkHttpClient()
-    val request = Request.Builder()
-        .url(url)
-        .build()
+    if (permissionState.hasPermission) {
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            if (ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                fusedLocationProviderClient.lastLocation
+                    .addOnSuccessListener { location: Location? ->
+                        if (location != null) {
+                            val latitude = location.latitude
+                            val longitude = location.longitude
+                            Log.d("Location", "Latitude: $latitude, Longitude: $longitude")
 
-    val response = client.newCall(request).execute()
-    val responseBody = response.body?.string()
+                            locationViewModel.setCoordinates(latitude, longitude)
+                            locationViewModel.getFormattedAddress(context, latitude, longitude)
 
-    if (response.isSuccessful && responseBody != null) {
-        val jsonObject = JSONObject(responseBody)
-        val results = jsonObject.getJSONArray("results")
-        if (results.length() > 0) {
-            val address = results.getJSONObject(0).getString("formatted_address")
-            address
-        } else {
-            "Unknown Address"
+
+                        } else {
+                            Toast.makeText(context, "Failed to get location", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    .addOnFailureListener {
+                        // Failure listener logic
+                    }
+            }
         }
-    } else {
-        null
     }
 }

@@ -17,7 +17,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.dicoding.mdminsatuapp.R
+import com.dicoding.mdminsatuapp.ui.screen.quicksurvey.QuickSurveyViewModel
 
 data class ChipData(
     val icon: Int,
@@ -25,8 +28,20 @@ data class ChipData(
     var selected: MutableState<Boolean> = mutableStateOf(false)
 )
 
+data class SurveyChipData(
+    val icon: Int,
+    val selectedIcon: Int,
+    val title: String,
+    var selected: MutableState<Boolean> = mutableStateOf(false)
+)
+
 @Composable
-fun SurveyChipsGroup(title: String, chips: List<ChipData>, selectedChips: MutableList<ChipData>) {
+fun SurveyChipsGroup(
+    title: String,
+    chips: List<SurveyChipData>,
+    selectedChips: MutableList<SurveyChipData>,
+    viewModel: QuickSurveyViewModel
+) {
     Column(modifier = Modifier.padding(start = 0.dp, end = 0.dp, top = 4.dp, bottom = 4.dp)) {
         Text(text = title, style = MaterialTheme.typography.h6)
         Spacer(modifier = Modifier.width(8.dp))
@@ -41,65 +56,10 @@ fun SurveyChipsGroup(title: String, chips: List<ChipData>, selectedChips: Mutabl
                     text = chip.title,
                     chip = chip,
                     modifier = Modifier.padding(8.dp),
-                    selectedChips = selectedChips
+                    selectedChips = selectedChips,
+                    viewModel = viewModel
                 )
             }
-        }
-    }
-}
-
-
-@Composable
-fun CategoryChipsGroup(chips: List<ChipData>) {
-    Column(modifier = Modifier.padding(start = 0.dp, end = 0.dp, top = 4.dp, bottom = 4.dp)) {
-        LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            items(chips.size) { index ->
-                val chip = chips[index]
-                CategoryChip(
-                    iconResId = chip.icon,
-                    text = chip.title,
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun CategoryChip(
-    iconResId: Int,
-    text: String,
-    modifier: Modifier = Modifier,
-) {
-    Card(
-        backgroundColor = Color.White,
-        shape = RoundedCornerShape(8.dp),
-        elevation = 4.dp,
-        modifier = modifier
-            .clickable { /* Handle chip click here */ }
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .fillMaxWidth()
-    ) {
-        Column(
-            modifier = Modifier
-                .padding(8.dp)
-                .wrapContentSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Image(
-                painter = painterResource(id = iconResId),
-                contentDescription = null,
-                modifier = Modifier.size(24.dp)
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = text,
-                modifier = Modifier
-                    .wrapContentWidth()
-            )
         }
     }
 }
@@ -109,17 +69,18 @@ fun CategoryChip(
 fun SurveyChips(
     iconResId: Int,
     text: String,
-    chip: ChipData,
+    chip: SurveyChipData,
     modifier: Modifier = Modifier,
     shape: Shape = RoundedCornerShape(8.dp),
-    selectedChips: MutableList<ChipData> = mutableListOf()
+    selectedChips: MutableList<SurveyChipData>,
+    viewModel: QuickSurveyViewModel
 ) {
     val selected by remember { chip.selected }
     val borderColor = if (selected) Color(0xFFFFDE59) else Color.Gray
 
     Column(
         modifier = modifier
-            .clickable { handleChipSelection(chip, selectedChips) }
+            .clickable { viewModel.handleChipSelection(chip, selectedChips) }
             .border(1.dp, borderColor, shape = shape)
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .wrapContentWidth(),
@@ -127,7 +88,7 @@ fun SurveyChips(
         verticalArrangement = Arrangement.Center
     ) {
         Image(
-            painter = painterResource(id = iconResId),
+            painter = painterResource(id = if(selected) chip.selectedIcon else chip.icon),
             contentDescription = null,
             modifier = Modifier.size(24.dp)
         )
@@ -137,47 +98,41 @@ fun SurveyChips(
 }
 
 
-fun handleChipSelection(chip: ChipData, selectedChips: MutableList<ChipData>) {
-    chip.selected.value = !chip.selected.value
-    if (chip.selected.value) {
-        selectedChips.add(chip)
-    } else {
-        selectedChips.remove(chip)
-    }
-}
-
-
 @Preview(showBackground = true)
 @Composable
 fun SurveyChipsPreview() {
     val sports = listOf(
-        ChipData(R.drawable.ic_futsal, "Futsal"),
-        ChipData(R.drawable.ic_basketball, "Badminton"),
-        ChipData(R.drawable.ic_badminton, "Basketball"),
+        SurveyChipData(R.drawable.ic_futsal, R.drawable.ic_futsal_selected, "Futsal"),
+        SurveyChipData(R.drawable.ic_basketball, R.drawable.ic_basketball_selected, "Badminton"),
+        SurveyChipData(R.drawable.ic_badminton, R.drawable.ic_badminton_selected, "Basketball"),
     )
-    val selectedSports = remember { mutableStateListOf<ChipData>() }
+    val selectedSports = remember { mutableStateListOf<SurveyChipData>() }
 
     val arts = listOf(
-        ChipData(R.drawable.ic_pottery, "Pottery"),
-        ChipData(R.drawable.ic_painting, "Painting"),
-        ChipData(R.drawable.ic_music, "Music"),
+        SurveyChipData(R.drawable.ic_pottery, R.drawable.ic_pottery_selected,  "Pottery"),
+        SurveyChipData(R.drawable.ic_painting,R.drawable.ic_painting_selected, "Painting"),
+        SurveyChipData(R.drawable.ic_music,R.drawable.ic_music_selected, "Music"),
     )
-    val selectedArts = remember { mutableStateListOf<ChipData>() }
+    val selectedArts = remember { mutableStateListOf<SurveyChipData>() }
 
     val travel = listOf(
-        ChipData(R.drawable.ic_hiking, "Hiking"),
-        ChipData(R.drawable.ic_diving, "Diving"),
-        ChipData(R.drawable.ic_rafting, "Rafting"),
+        SurveyChipData(R.drawable.ic_hiking,R.drawable.ic_hiking_selected ,"Hiking"),
+        SurveyChipData(R.drawable.ic_diving,R.drawable.ic_diving_selected, "Diving"),
+        SurveyChipData(R.drawable.ic_rafting,R.drawable.ic_rafting_selected, "Rafting"),
     )
-    val selectedTravel = remember { mutableStateListOf<ChipData>() }
+    val selectedTravel = remember { mutableStateListOf<SurveyChipData>() }
 
     val edu = listOf(
-        ChipData(R.drawable.ic_workshop, "Workshop"),
-        ChipData(R.drawable.ic_teaching, "Teaching"),
-        ChipData(R.drawable.ic_study, "Study Club"),
+        SurveyChipData(R.drawable.ic_workshop, R.drawable.ic_workshop_selected, "Workshop"),
+        SurveyChipData(R.drawable.ic_teaching, R.drawable.ic_teaching_selected, "Teaching"),
+        SurveyChipData(R.drawable.ic_study, R.drawable.ic_study_selected, "Study Club"),
     )
-    val selectedEdu = remember { mutableStateListOf<ChipData>() }
+    val selectedEdu = remember { mutableStateListOf<SurveyChipData>() }
 
+    val viewModel = viewModel(
+        modelClass = QuickSurveyViewModel::class.java,
+        factory = ViewModelProvider.NewInstanceFactory()
+    )
     Box(
         modifier = Modifier
             .padding(20.dp)
@@ -185,11 +140,10 @@ fun SurveyChipsPreview() {
         contentAlignment = Alignment.Center
     ) {
         Column {
-            SurveyChipsGroup("Sports", sports, selectedSports)
-            SurveyChipsGroup("Arts", arts, selectedArts)
-            SurveyChipsGroup("Travel", travel, selectedTravel)
-            SurveyChipsGroup("Edu", edu, selectedEdu)
-
+            SurveyChipsGroup("Sports", sports, selectedSports, viewModel)
+            SurveyChipsGroup("Arts", arts, selectedArts, viewModel)
+            SurveyChipsGroup("Travel", travel, selectedTravel, viewModel)
+            SurveyChipsGroup("Edu", edu, selectedEdu, viewModel)
         }
     }
 }
@@ -298,6 +252,61 @@ fun GenderChip(text: String, isSelected: Boolean, onChipClicked: () -> Unit) {
                 modifier = Modifier.padding(start = 8.dp, end = 32.dp, top = 8.dp, bottom = 8.dp),
                 style = MaterialTheme.typography.body2,
                 color = Color.Black
+            )
+        }
+    }
+}
+
+@Composable
+fun CategoryChipsGroup(chips: List<ChipData>) {
+    Column(modifier = Modifier.padding(start = 0.dp, end = 0.dp, top = 4.dp, bottom = 4.dp)) {
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            items(chips.size) { index ->
+                val chip = chips[index]
+                CategoryChip(
+                    iconResId = chip.icon,
+                    text = chip.title,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun CategoryChip(
+    iconResId: Int,
+    text: String,
+    modifier: Modifier = Modifier,
+) {
+    Card(
+        backgroundColor = Color.White,
+        shape = RoundedCornerShape(8.dp),
+        elevation = 4.dp,
+        modifier = modifier
+            .clickable { /* Handle chip click here */ }
+            .padding(8.dp)
+            .fillMaxWidth()
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(12.dp)
+                .wrapContentSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Image(
+                painter = painterResource(id = iconResId),
+                contentDescription = null,
+                modifier = Modifier.size(24.dp)
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = text,
+                modifier = Modifier
+                    .wrapContentWidth()
             )
         }
     }

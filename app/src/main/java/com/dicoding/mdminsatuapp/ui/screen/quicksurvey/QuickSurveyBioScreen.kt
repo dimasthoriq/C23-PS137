@@ -19,17 +19,18 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun QuickSurveyBioScreen(
-    navController: NavController
+    navController: NavController,
+    quickSurveyViewModel: QuickSurveyViewModel
 ) {
     var age by remember { mutableStateOf(0) }
-    var gender by remember { mutableStateOf("") }
+    var gender by remember { mutableStateOf(true) }
     var distance by remember { mutableStateOf("") }
     var isNextButtonEnabled by remember { mutableStateOf(false) }
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
 
     fun collectInputs() {
-        isNextButtonEnabled = age > 0 && gender.isNotEmpty() && distance.isNotEmpty()
+        isNextButtonEnabled = age > 0 && distance.isNotEmpty()
     }
 
     fun showErrorMessage(message: String) {
@@ -79,6 +80,10 @@ fun QuickSurveyBioScreen(
                 text = "Next",
                 onClick = {
                     if (isNextButtonEnabled) {
+                        quickSurveyViewModel.age = age
+                        quickSurveyViewModel.gender = gender
+                        quickSurveyViewModel.distance = distance
+
                         navController.navigate("interest")
                     } else {
                         showErrorMessage("Please fill in all the fields")
@@ -122,7 +127,10 @@ fun QuickSurveyPreview() {
         contentAlignment = Alignment.Center
     ) {
         Column {
-            QuickSurveyBioScreen(navController = NavController(LocalContext.current))
+            QuickSurveyBioScreen(
+                navController = NavController(LocalContext.current),
+                quickSurveyViewModel = QuickSurveyViewModel()
+            )
         }
     }
 }

@@ -58,6 +58,8 @@ fun LoginScreen(
 
         val passwordFocusRequester = remember { FocusRequester() }
 
+
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -158,17 +160,19 @@ fun LoginScreen(
                                 when (result) {
                                     is LoginViewModel.LoginResult.Success -> {
                                         val status = result.status
-                                        if (status == 201 || status == 200) {
+                                        if (status == 201) {
                                             showDialog.value = true
                                             dialogMessage.value = "Login Success"
-                                        } else {
+                                            navController.navigate("bio")
+                                        } else if (status == 200) {
                                             showDialog.value = true
-                                            dialogMessage.value = "Login failed. Please try again"
+                                            dialogMessage.value = "Login Success"
+                                            navController.navigate("home")
                                         }
                                     }
                                     is LoginViewModel.LoginResult.Error -> {
                                         showDialog.value = true
-                                        dialogMessage.value = result.errorMessage
+                                        dialogMessage.value = "Login failed"
                                     }
                                 }
                             }
@@ -205,17 +209,27 @@ fun LoginScreen(
         }
 
         if (showDialog.value) {
-            CustomSuccessDialog(
-                showDialog = true,
-                onDismiss = {
-                    showDialog.value = false
-                    navController.navigate("bio")
-                },
-                message = dialogMessage.value
-            )
+            if (dialogMessage.value == "Login failed") {
+                CustomErrorDialog(
+                    showDialog = true,
+                    onDismiss = {
+                        showDialog.value = false
+                    },
+                    message = dialogMessage.value
+                )
+            } else {
+                CustomSuccessDialog(
+                    showDialog = true,
+                    onDismiss = {
+                        showDialog.value = false
+                    },
+                    message = dialogMessage.value
+                )
+            }
         }
     }
 }
+
 
 
 @Preview

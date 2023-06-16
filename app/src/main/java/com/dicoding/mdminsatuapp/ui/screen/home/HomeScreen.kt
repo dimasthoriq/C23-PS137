@@ -1,21 +1,27 @@
 package com.dicoding.mdminsatuapp.ui.screen.home
 
+import android.Manifest
 import android.annotation.SuppressLint
+import androidx.compose.animation.animateColor
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,62 +29,52 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.dicoding.mdminsatuapp.R
-import com.dicoding.mdminsatuapp.data.local.PreferenceUtils
 import com.dicoding.mdminsatuapp.dummy.getDummyRecommendationList
 import com.dicoding.mdminsatuapp.maps.LocationViewModel
 import com.dicoding.mdminsatuapp.ui.components.*
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.rememberPermissionState
+import getCurrentLocation
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun HomeScreen(
     navController: NavController,
     locationViewModel: LocationViewModel,
 ) {
     val context = LocalContext.current
-    val locationName by remember {
-        mutableStateOf(PreferenceUtils.getLocationName(context))
+    val locationName = locationViewModel.formattedAddress.collectAsState().value ?: "Nama Lokasi"
+    val permissionState = rememberPermissionState(Manifest.permission.ACCESS_FINE_LOCATION)
+    val isGettingLocation = remember { mutableStateOf(false) }
+
+    val infiniteTransition = rememberInfiniteTransition()
+    val color by infiniteTransition.animateColor(
+        initialValue = Color.Gray,
+        targetValue = Color.LightGray,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 500, easing = LinearEasing),
+            repeatMode = RepeatMode.Reverse
+        )
+    )
+
+    LaunchedEffect(Unit) {
+        if (permissionState.permissionRequested && permissionState.hasPermission) {
+            isGettingLocation.value = true
+            getCurrentLocation(context, navController, permissionState, locationViewModel)
+            isGettingLocation.value = false
+        }
+    }
+
+    LaunchedEffect(permissionState) {
+        if (!permissionState.hasPermission) {
+            permissionState.launchPermissionRequest()
+        }
     }
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    IconButton(onClick = {
-                        navController.navigate("maps")
-                        locationViewModel.coordinates.value?.let { coordinates ->
-                            locationViewModel.setCoordinates(coordinates.first, coordinates.second)
-                        }
-                    }) {
-                        val truncatedLocationName = truncateString(locationName ?: "Nama Lokasi", 30)
-                        Text(
-                            text = truncatedLocationName,
-                            color = Color.Black,
-                            style = MaterialTheme.typography.h6.copy(fontSize = 16.sp)
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(onClick = {
-                        navController.navigate("bucket_list")
-                    }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_bucket),
-                            contentDescription = "Bucket List",
-                            tint = Color.Black,
-                            modifier = Modifier.size(24.dp)
-                        )
-                    }
-                },
-                backgroundColor = Color.Transparent,
-                elevation = 0.dp,
-                modifier = Modifier.background(
-                    brush = Brush.verticalGradient(
-                        colors = listOf(Color(0xFFFFDE59), Color(0xFFFFA91A)),
-                        startY = 0f,
-                        endY = 200f
-                    )
-                )
-            )
+
         },
         bottomBar = {
             BottomNavBar(navController = navController)
@@ -98,6 +94,45 @@ fun HomeScreen(
                         )
                     )
             )
+            Row(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp, vertical = 4.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                if (isGettingLocation.value) {
+                    Text(
+                        text = "Mendapatkan Lokasi...",
+                        color = color,
+                        style = MaterialTheme.typography.h6.copy(fontSize = 16.sp),
+                        modifier = Modifier.weight(1f)
+                    )
+                } else {
+                    ClickableText(
+                        text = AnnotatedString(truncateString(locationName, 30)),
+                        onClick = {
+                            if (!isGettingLocation.value) {
+                                isGettingLocation.value = true
+                                getCurrentLocation(context, navController, permissionState, locationViewModel)
+                                isGettingLocation.value = false
+                            }
+                        },
+                        style = MaterialTheme.typography.h6.copy(fontSize = 16.sp),
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+                IconButton(onClick = {
+                    navController.navigate("bucket_list")
+                }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_bucket),
+                        contentDescription = "Bucket List",
+                        tint = Color.Black,
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+            }
             Column(
                 modifier = Modifier
                     .clip(RoundedCornerShape(topStart = 20.dp))
@@ -106,7 +141,7 @@ fun HomeScreen(
 
             ) {
                 Spacer(modifier = Modifier.height(16.dp))
-                Box() {
+                Box {
                     HomeContent(navController = navController)
                 }
                 LoadRecommendationData()
@@ -134,11 +169,9 @@ fun LoadRecommendationData() {
                     .padding(vertical = 8.dp)
                     .fillMaxWidth()
             )
-
         }
     }
 }
-
 
 @Composable
 fun truncateString(string: String, maxLength: Int): String {
@@ -148,7 +181,6 @@ fun truncateString(string: String, maxLength: Int): String {
         string
     }
 }
-
 
 val chips = listOf(
     ChipData(R.drawable.ic_travel, "Travel"),
@@ -175,11 +207,8 @@ fun HomeContent(
             fontWeight = FontWeight.Bold,
             modifier = Modifier
         )
-
     }
 }
-
-
 
 @Preview(showBackground = true)
 @Composable
@@ -189,3 +218,5 @@ fun HomeScreenPreview() {
 
     HomeScreen(navController = navController, locationViewModel = locationViewModel)
 }
+
+

@@ -21,7 +21,6 @@ class LocationViewModel : ViewModel() {
         coordinates.value = Pair(latitude, longitude)
     }
 
-
     fun getFormattedAddress(context: Context, latitude: Double, longitude: Double) {
         val geocoder = Geocoder(context)
         try {
@@ -33,12 +32,9 @@ class LocationViewModel : ViewModel() {
 
                 PreferenceUtils.saveLocationName(context, formattedAddress)
                 PreferenceUtils.saveCoordinates(context, latitude, longitude)
-
             }
         } catch (e: IOException) {
             Log.e("LocationViewModel", "Failed to get formatted address: ${e.message}")
         }
     }
-
-
 }

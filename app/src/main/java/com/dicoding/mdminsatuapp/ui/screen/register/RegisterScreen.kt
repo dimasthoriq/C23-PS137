@@ -278,7 +278,10 @@ fun RegisterScreen(navController: NavController) {
         if (showSuccessDialog.value) {
             CustomSuccessDialog(
                 showDialog = true,
-                onDismiss = { showDialog.value = false },
+                onDismiss = {
+                    showDialog.value = false
+                    navController.navigate("login")
+                            },
                 title = dialogTitle.value,
                 message = dialogMessage.value
             )

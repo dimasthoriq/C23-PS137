@@ -29,6 +29,7 @@ import com.dicoding.mdminsatuapp.dummy.edu
 import com.dicoding.mdminsatuapp.dummy.sports
 import com.dicoding.mdminsatuapp.dummy.travel
 import com.dicoding.mdminsatuapp.ui.components.*
+import com.dicoding.mdminsatuapp.ui.screen.quicksurvey.QuickSurveyViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -37,9 +38,17 @@ fun ProfileScreen(
     sessionManager: SessionManager
 ) {
     val selectedTabIndex = remember { mutableStateOf(0) }
-    val selectedChips = remember { mutableStateListOf<ChipData>() }
+    val selectedChips = remember { mutableStateListOf<SurveyChipData>() }
     val isSelectedState = remember { mutableStateOf(false) }
     val showLogoutDialog = remember { mutableStateOf(false) }
+
+    val selectedSportsCount = remember { mutableStateOf(0) }
+    val selectedArtsCount = remember { mutableStateOf(0) }
+    val selectedTravelCount = remember { mutableStateOf(0) }
+    val selectedEduCount = remember { mutableStateOf(0) }
+
+    val viewmodel = QuickSurveyViewModel()
+
 
 
     Scaffold(
@@ -67,10 +76,10 @@ fun ProfileScreen(
                             Text(text = "Choose 3 or more activities you might be interested in!")
                         }
 
-                        item { SurveyChipsGroup("Sports", sports,selectedChips) }
-                        item { SurveyChipsGroup("Arts", arts,selectedChips) }
-                        item { SurveyChipsGroup("Travel", travel,selectedChips) }
-                        item { SurveyChipsGroup("Edu", edu,selectedChips) }
+                        item { SurveyChipsGroup("Sports", sports,selectedChips,viewmodel) }
+                        item { SurveyChipsGroup("Arts", arts,selectedChips,viewmodel) }
+                        item { SurveyChipsGroup("Travel", travel,selectedChips, viewmodel) }
+                        item { SurveyChipsGroup("Edu", edu,selectedChips, viewmodel) }
 
                         item {
                             Spacer(modifier = Modifier.height(32.dp))

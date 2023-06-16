@@ -1,10 +1,10 @@
-package com.dicoding.mdminsatuapp.data.remote.input
+package com.dicoding.mdminsatuapp.data.remote.request
 
 data class QuickSurveyRequest(
-    val user_id: String,
+    val userId: String,
     val age: Int,
     val gender: Boolean,
-    val travel_dist: String,
+    val travelDist: String,
     val sports: Int,
     val arts: Int,
     val travel: Int,

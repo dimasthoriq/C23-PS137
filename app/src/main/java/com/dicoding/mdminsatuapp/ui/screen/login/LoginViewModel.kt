@@ -2,7 +2,7 @@ package com.dicoding.mdminsatuapp.ui.screen.login
 
 import androidx.lifecycle.ViewModel
 import com.dicoding.mdminsatuapp.data.local.SessionManager
-import com.dicoding.mdminsatuapp.data.remote.input.LoginRequest
+import com.dicoding.mdminsatuapp.data.remote.request.LoginRequest
 import com.dicoding.mdminsatuapp.data.remote.response.LoginResponse
 import com.dicoding.mdminsatuapp.data.remote.retrofit.ApiConfig
 import retrofit2.Call

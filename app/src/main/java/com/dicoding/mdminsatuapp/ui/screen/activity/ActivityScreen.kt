@@ -7,6 +7,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,6 +24,9 @@ import com.dicoding.mdminsatuapp.R
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun ActivityScreen(navController: NavController) {
+    val tabTitles = listOf("Upcoming", "Done")
+    var selectedTabIndex by mutableStateOf(0)
+
     Scaffold(
         topBar = {
             TopBar(text = "Activity Status")
@@ -31,29 +37,25 @@ fun ActivityScreen(navController: NavController) {
     ) {
         Column {
             TabRow(
-                selectedTabIndex = 0,
+                selectedTabIndex = selectedTabIndex,
                 backgroundColor = Color.Transparent,
                 contentColor = MaterialTheme.colors.onPrimary,
                 indicator = { tabPositions ->
                     TabRowDefaults.Indicator(
-                        modifier = Modifier.tabIndicatorOffset(tabPositions[0]),
+                        modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
                         color = MaterialTheme.colors.primary,
                         height = 2.dp
                     )
                 }
             ) {
-                Tab(
-                    selected = true,
-                    onClick = { },
-                    text = { Text("Upcoming", color = MaterialTheme.colors.primary) },
-                    selectedContentColor = MaterialTheme.colors.primary
-                )
-                Tab(
-                    selected = false,
-                    onClick = { },
-                    text = { Text("Done", color = MaterialTheme.colors.primary) },
-                    selectedContentColor = MaterialTheme.colors.primary
-                )
+                tabTitles.forEachIndexed { index, title ->
+                    Tab(
+                        selected = selectedTabIndex == index,
+                        onClick = { selectedTabIndex = index },
+                        text = { Text(title, color = MaterialTheme.colors.secondary) },
+                        selectedContentColor = MaterialTheme.colors.secondary
+                    )
+                }
             }
             LazyColumn {
                 items(10) { index ->

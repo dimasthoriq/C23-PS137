@@ -1,4 +1,4 @@
-package com.dicoding.mdminsatuapp.data.remote.input
+package com.dicoding.mdminsatuapp.data.remote.request
 data class RegisterRequest(
     val name: String,
     val email: String,
