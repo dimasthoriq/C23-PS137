@@ -28,21 +28,22 @@ fun RadioButtonOption(text: String, isSelected: Boolean, onSelect: () -> Unit) {
 }
 
 @Composable
-fun GenderSelection(selectedGender: Boolean, onGenderSelected: (Boolean) -> Unit) {
+fun GenderSelection(isMale: Boolean, isFemale: Boolean, onMaleSelected: () -> Unit, onFemaleSelected: () -> Unit) {
     Row {
         RadioButtonOption(
             text = "Male",
-            isSelected = selectedGender,
-            onSelect = { onGenderSelected(true) }
+            isSelected = isMale,
+            onSelect = onMaleSelected
         )
 
         RadioButtonOption(
             text = "Female",
-            isSelected = !selectedGender,
-            onSelect = { onGenderSelected(false) }
+            isSelected = isFemale,
+            onSelect = onFemaleSelected
         )
     }
 }
+
 
 @Composable
 fun DistanceSelection(selectedDistance: String, onDistanceSelected: (String) -> Unit) {
@@ -70,5 +71,5 @@ fun DistanceSelection(selectedDistance: String, onDistanceSelected: (String) -> 
 @Preview(showBackground = true)
 @Composable
 fun RadioButtonPreview() {
-    GenderSelection(selectedGender = true , onGenderSelected = {} )
+//    GenderSelection(selectedGender = true , onGenderSelected = {} )
 }

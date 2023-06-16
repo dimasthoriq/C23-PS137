@@ -311,5 +311,3 @@ fun CategoryChip(
         }
     }
 }
-
-

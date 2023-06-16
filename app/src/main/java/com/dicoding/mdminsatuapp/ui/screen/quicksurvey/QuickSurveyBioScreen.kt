@@ -23,7 +23,8 @@ fun QuickSurveyBioScreen(
     quickSurveyViewModel: QuickSurveyViewModel
 ) {
     var age by remember { mutableStateOf(0) }
-    var gender by remember { mutableStateOf(true) }
+    var isMale by remember { mutableStateOf(false) }
+    var isFemale by remember { mutableStateOf(false) }
     var distance by remember { mutableStateOf("") }
     var isNextButtonEnabled by remember { mutableStateOf(false) }
     val scaffoldState = rememberScaffoldState()
@@ -57,10 +58,20 @@ fun QuickSurveyBioScreen(
         Spacer(modifier = Modifier.height(32.dp))
 
         Text(text = "How would you classify your gender?")
-        GenderSelection(gender) { newGender ->
-            gender = newGender
-            collectInputs()
-        }
+        GenderSelection(
+            isMale = isMale,
+            isFemale = isFemale,
+            onMaleSelected = {
+                isMale = true
+                isFemale = false
+                quickSurveyViewModel.gender = 1
+            },
+            onFemaleSelected = {
+                isFemale = true
+                isMale = false
+                quickSurveyViewModel.gender = 0
+            }
+        )
 
         Spacer(modifier = Modifier.height(32.dp))
 
@@ -81,7 +92,6 @@ fun QuickSurveyBioScreen(
                 onClick = {
                     if (isNextButtonEnabled) {
                         quickSurveyViewModel.age = age
-                        quickSurveyViewModel.gender = gender
                         quickSurveyViewModel.distance = distance
 
                         navController.navigate("interest")

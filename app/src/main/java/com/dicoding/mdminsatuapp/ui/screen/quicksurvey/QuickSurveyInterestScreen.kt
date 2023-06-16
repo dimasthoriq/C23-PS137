@@ -156,13 +156,6 @@ fun QuickSurveyInterestScreen(
         }
     }
 
-    LaunchedEffect(showErrorDialog) {
-        if (showErrorDialog) {
-            navController.navigate(Screen.Home.route) {
-                popUpTo(Screen.QuickSurveyInterest.route) { inclusive = true }
-            }
-        }
-    }
 
 }
 

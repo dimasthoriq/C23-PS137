@@ -4,8 +4,6 @@ import com.dicoding.mdminsatuapp.data.remote.request.LoginRequest
 import com.dicoding.mdminsatuapp.data.remote.request.QuickSurveyRequest
 import com.dicoding.mdminsatuapp.data.remote.request.RegisterRequest
 import com.dicoding.mdminsatuapp.data.remote.response.LoginResponse
-import com.dicoding.mdminsatuapp.data.remote.response.QuickSurveyResponse
-import com.dicoding.mdminsatuapp.data.remote.response.RegisterResponse
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -25,5 +23,5 @@ interface ApiService {
     @POST("api/quickSurvey")
     fun quickSurveyRequest(
         @Body quickSurveyRequest: QuickSurveyRequest
-    ): Call<QuickSurveyResponse>
+    ): Call<ResponseBody>
 }

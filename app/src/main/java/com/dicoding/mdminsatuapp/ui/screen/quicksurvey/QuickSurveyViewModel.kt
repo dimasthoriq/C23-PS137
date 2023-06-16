@@ -7,6 +7,7 @@ import com.dicoding.mdminsatuapp.data.remote.response.QuickSurveyResponse
 import com.dicoding.mdminsatuapp.data.remote.retrofit.ApiConfig
 import com.dicoding.mdminsatuapp.ui.components.ChipData
 import com.dicoding.mdminsatuapp.ui.components.SurveyChipData
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,13 +16,13 @@ class QuickSurveyViewModel : ViewModel() {
     private val apiService = ApiConfig.getApiService()
 
     var age by mutableStateOf(0)
-    var gender by mutableStateOf(true)
+    var gender by mutableStateOf(0)
     var distance by mutableStateOf("")
 
-     val selectedSports = mutableStateListOf<ChipData>()
-     val selectedArts = mutableStateListOf<ChipData>()
-     val selectedTravel = mutableStateListOf<ChipData>()
-     val selectedEdu = mutableStateListOf<ChipData>()
+    val selectedSports = mutableStateListOf<SurveyChipData>()
+    val selectedArts = mutableStateListOf<SurveyChipData>()
+    val selectedTravel = mutableStateListOf<SurveyChipData>()
+    val selectedEdu = mutableStateListOf<SurveyChipData>()
 
     fun handleChipSelection(chip: SurveyChipData, selectedChips: MutableList<SurveyChipData>) {
         chip.selected.value = !chip.selected.value
@@ -53,27 +54,28 @@ class QuickSurveyViewModel : ViewModel() {
             edu = eduCount
         )
 
-        apiService.quickSurveyRequest(request).enqueue(object : Callback<QuickSurveyResponse> {
+        apiService.quickSurveyRequest(request).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(
-                call: Call<QuickSurveyResponse>,
-                response: Response<QuickSurveyResponse>
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
             ) {
                 if (response.isSuccessful) {
-                    val surveyResponse = response.body()
-                    if (surveyResponse?.code == "200") {
+                    val responseText = response.body()?.string()
+                    if (responseText == "OK") {
                         onSuccess.invoke()
                     } else {
-                        onError.invoke("Upload failed: ${surveyResponse?.message}")
+                        onError.invoke("Upload failed")
                     }
                 } else {
                     onError.invoke("Upload failed: ${response.message()}")
                 }
             }
 
-            override fun onFailure(call: Call<QuickSurveyResponse>, t: Throwable) {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 onError.invoke("Upload failed: ${t.message}")
             }
         })
     }
+
 
 }
