@@ -331,7 +331,37 @@ const getData = async (body) => {
   })
 }
 
-app.get('/api/login', (req, res)=>{ // send UID
+let register = (body)=>{
+  return new Promise((resolve, reject)=>{
+    connection.query
+    ("INSERT INTO users (user_name, email, passwords) VALUES ('"+body.user_name+"', '"+body.email+"', '"+body.password+"')",
+    (err, rows, fields)=>{
+      if (err){
+        reject(err)
+      }else{
+        resolve(rows)
+      }
+    }
+    )
+  })
+}
+
+let checkAccount = (body)=>{
+  return new Promise((resolve, reject)=>{
+    connection.query
+    ("SELECT * FROM users WHERE email='"+body.email+"'",
+    (err, rows, fields)=>{
+      if (err){
+        reject(err)
+      }else{
+        resolve(rows)
+      }
+    }
+    )
+  })
+}
+
+app.post('/api/login', (req, res)=>{ // send UID
   let user = loginAuth(req.body)
   let temp = user.then((value)=>{
     let userParse = JSON.parse(JSON.stringify(value))
@@ -358,19 +388,23 @@ app.get('/api/login', (req, res)=>{ // send UID
   })
 })
 
-app.post('/api/register', (req, res) => { //Database issue, auto increment off
-  connection.connect()
-  connection.query('INSERT INTO users (user_name, email, password) VALUES (?, ?, ?)',
-  [req.body.user_name, req.body.email, req.body.password],
-  (err, rows, fields) => {
-    if (err) throw err
-      if(rows.length!=0){
-        res.send('success')
-      }else{
-        res.send('failed')
-      }
+app.post('/api/register', (req, res) => { 
+  let temp = checkAccount(req.body).then((value)=>{
+    if(value.length == 0){
+      let temp1 = register(req.body).then((value)=>{
+        res.sendStatus(200)
+      },
+      (err)=>{
+        res.send(err)
+      })
+    }else{
+      res.sendStatus(401)
+    }
+  },
+  (err)=>{
+    res.sendStatus(400)
   })
-  connection.end()
+
 })
 
 app.get('/api/loadUserActivityUpcoming', (req, res) => {
