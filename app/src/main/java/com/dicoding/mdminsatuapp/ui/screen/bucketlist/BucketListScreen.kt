@@ -17,6 +17,7 @@ import androidx.navigation.NavController
 import com.dicoding.mdminsatuapp.ui.components.ActivityCard
 import com.dicoding.mdminsatuapp.ui.components.TopBar
 import com.dicoding.mdminsatuapp.R
+import com.dicoding.mdminsatuapp.ui.components.BucketCard
 import getDummyActivityList
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -33,13 +34,14 @@ fun BucketListScreen(navController: NavController) {
         content = {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(getDummyActivityList()) { activity ->
-                    ActivityCard(
+                    BucketCard(
                         title = activity[0],
                         photoUrl = activity[1],
                         date = activity[2],
                         location = activity[3],
                         dateIcon = R.drawable.ic_calendar,
                         locationIcon = R.drawable.ic_location,
+                        bucketIcon = R.drawable.ic_bucket_fill,
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                     )
                 }

@@ -4,22 +4,22 @@ import com.dicoding.mdminsatuapp.ui.components.ActivityCardData
 fun getDummyActivityList(): List<List<String>> {
     return listOf(
         listOf(
-            "Activity 1",
-            "https://raw.githubusercontent.com/okkyPratama/composedummyimages/main/data-dummy-compose-app/product_1.jpg",
-            "Date 1",
-            "Location 1"
+            "Zumba Session",
+            "https://raw.githubusercontent.com/okkyPratama/minsatuDummyImg/main/header_23.jpg",
+            "09 July 2023",
+            "Urban Gym, Jl. Dago Asri No.8"
         ),
         listOf(
-            "Activity 2",
-            "https://raw.githubusercontent.com/okkyPratama/composedummyimages/main/data-dummy-compose-app/product_1.jpg",
-            "Date 2",
-            "Location 2"
+            "Kelas Batik Celup Jogja",
+            "https://raw.githubusercontent.com/okkyPratama/minsatuDummyImg/main/header_26.jpg",
+            "16 July 2023",
+            "Jl. Pelem Sari I 160, Prenggan, Kota Yogyakarta"
         ),
         listOf(
-            "Activity 3",
-            "https://raw.githubusercontent.com/okkyPratama/composedummyimages/main/data-dummy-compose-app/product_1.jpg",
-            "Date 3",
-            "Location 3"
+            "Jatim Park Family Day",
+            "https://raw.githubusercontent.com/okkyPratama/minsatuDummyImg/main/header_7.jpg",
+            "20 July 2023",
+            "Jawa Timur Park 2, Jl. Jatim Park II"
         )
     )
 }

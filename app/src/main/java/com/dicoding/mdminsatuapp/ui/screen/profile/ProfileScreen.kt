@@ -1,23 +1,16 @@
 package com.dicoding.mdminsatuapp.ui.screen.profile
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -49,14 +42,23 @@ fun ProfileScreen(
 
     val viewmodel = QuickSurveyViewModel()
 
-
-
     Scaffold(
+        modifier = Modifier
+            .fillMaxSize(),
         topBar = {
             TopBar(text = "Profile")
         },
+        bottomBar = {
+            BottomNavBar(
+                navController = navController
+            )
+        },
         content = {
-            Column(modifier = Modifier.fillMaxSize()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = 56.dp)
+            ) {
                 CustomTabRow(
                     selectedTabIndex = selectedTabIndex,
                     modifier = Modifier.padding(vertical = 8.dp),
@@ -159,17 +161,14 @@ fun ProfileScreen(
                             )
                             Spacer(modifier = Modifier.height(16.dp))
                         }
+
+                        item {
+                            Spacer(modifier = Modifier.height(100.dp))
+                        }
+
                     }
 
                 }
-                Box {
-                    BottomNavBar(
-                        navController = navController,
-                        modifier = Modifier.align(Alignment.BottomCenter)
-                    )
-                }
-
-
             }
         }
     )
@@ -196,5 +195,3 @@ fun ProfileScreenPreview() {
         sessionManager = SessionManager(context = LocalContext.current)
     )
 }
-
-

@@ -3,14 +3,12 @@ package com.dicoding.mdminsatuapp.ui.screen.detail
 import android.annotation.SuppressLint
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -30,6 +28,8 @@ import com.dicoding.mdminsatuapp.ui.components.TopBar
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun DetailScreen(navController: NavController) {
+    var bucketFilled by remember { mutableStateOf(false) }
+
     Scaffold(
         topBar = {
             TopBar(
@@ -46,6 +46,7 @@ fun DetailScreen(navController: NavController) {
             ) {
                 val imageUrl =
                     "https://raw.githubusercontent.com/okkyPratama/minsatuDummyImg/main/header_4.jpg"
+
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -58,6 +59,15 @@ fun DetailScreen(navController: NavController) {
                             .fillMaxSize(),
                         contentScale = ContentScale.Crop,
                     )
+
+                    IconButton(onClick = { bucketFilled = !bucketFilled }, modifier = Modifier.align(Alignment.TopEnd)) {
+                        Icon(
+                            painter = painterResource(id = if (bucketFilled) R.drawable.ic_bucket_selected else R.drawable.ic_bucket_outline),
+                            contentDescription = "Bucket Icon",
+                            tint = Color.Unspecified
+                        )
+                    }
+
                 }
 
                 Row(
@@ -120,7 +130,7 @@ fun DetailScreen(navController: NavController) {
                 )
                 Spacer(modifier = Modifier.height(16.dp))
 
-                ScheduleCard()
+//                ScheduleCard()
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -144,94 +154,8 @@ fun PreviewDetailScreen() {
 
 @Composable
 fun ScheduleCard() {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 8.dp, top = 8.dp, end = 8.dp, bottom = 4.dp)
-            .clip(RoundedCornerShape(16.dp))
-            .border(2.dp, Color(0xFFFFDE59), shape = RoundedCornerShape(16.dp)),
-        elevation = 4.dp
-    ) {
-        Box(modifier = Modifier.fillMaxWidth()) {
-            Row(
-                modifier = Modifier
-                    .padding(8.dp),
-                verticalAlignment = Alignment.Top
-            ) {
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(end = 16.dp),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_calendar),
-                        contentDescription = "Calendar",
-                        modifier = Modifier.size(24.dp)
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(
-                            text = "02",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 16.sp
-                        )
-                        Text(
-                            text = "Jul",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 16.sp
-                        )
-                    }
-                }
-                Box(
-                    modifier = Modifier
-                        .width(2.dp)
-                        .fillMaxHeight()
-                        .background(Color(0xFFFFA91A))
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Column(
-                    modifier = Modifier
-                        .weight(3f)
-                        .padding(top = 8.dp, bottom = 4.dp),
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text(text = "Sunday", fontWeight = FontWeight.Bold)
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(text = "07:00 - 09:00")
-                }
-            }
-            Box(
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(end = 8.dp, top = 8.dp)
-            ) {
-                OutlinedButton(
-                    onClick = { /* Handle button click */ },
-                    modifier = Modifier.padding(top = 0.dp),
-                    shape = RoundedCornerShape(16.dp),
-                    border = BorderStroke(1.dp, Color(0xFFFFDE59)),
-                    colors = ButtonDefaults.outlinedButtonColors(
-                        backgroundColor = Color.Transparent,
-                        contentColor = Color(0xFFFFA91A)
-                    )
-                ) {
-                    Text(
-                        text = "120 minutes",
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-            }
-        }
-    }
+    // Kode ScheduleCard()
 }
-
-
 
 @Preview(showBackground = true)
 @Composable
