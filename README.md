@@ -1,5 +1,13 @@
 # C23-PS137
-Bangkit 2023 Capstone Project Group C23-PS137 (-1)
+We are from C23-PS137 Bangkit Academy 2023 Product-Based Capstone Project. Here, we develop activity-sharing and community-based social media app to connect people in this post-pandemic era through activities or hobbies. In this app, we provide the recommendation activities based on user preferences.
+
+Our team consist of:
+* Dimas Ahmad Thoriq - ML
+* Derick Sufendy - ML
+* Abdul Roid - ML
+* Darrel Johan - CC
+* Yusdi Wibowo - CC
+* Okky Pratama - MD 
 
 # Links
 * [Project Plan](https://docs.google.com/document/d/1jULoqyHiPHE5pr8zrPeqBfwbHHQu17mgNvb11YOeFVk/edit?usp=sharing)
